@@ -100,7 +100,7 @@ if __name__ == "__main__":
         data = file.read()
 
     lexer.input(data) 
-    print(f"Analizando: {data}") 
+    print(f"\nAnalizando: {data}") 
 
     with open("output.txt", "w") as file:
         pass
