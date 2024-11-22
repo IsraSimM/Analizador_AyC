@@ -1,10 +1,5 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    COMA
-    INCLUDE
-
 Grammar
 
 Rule 0     S' -> statement
@@ -12,61 +7,888 @@ Rule 1     statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_
 Rule 2     for_init -> declaration
 Rule 3     for_init -> expression PUNTOYCOMA
 Rule 4     for_init -> empty
-Rule 5     declaration -> TIPODATO IDENTIFICADOR IGUAL expression PUNTOYCOMA
-Rule 6     declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA
-Rule 7     condition -> expression COMPARADOR expression
-Rule 8     for_update -> IDENTIFICADOR SUMA SUMA
-Rule 9     for_update -> IDENTIFICADOR RESTA RESTA
-Rule 10    function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block
-Rule 11    block -> LLLAVE RLLAVE
-Rule 12    block -> LLLAVE statement_list RLLAVE
-Rule 13    statement_list -> statement
-Rule 14    statement_list -> statement statement_list
-Rule 15    statement -> declaration
-Rule 16    statement -> expression PUNTOYCOMA
-Rule 17    statement -> preprocessor_directive
-Rule 18    statement -> function_definition
-Rule 19    expression -> expression SUMA expression
-Rule 20    expression -> expression RESTA expression
-Rule 21    expression -> expression MULTI expression
-Rule 22    expression -> expression DIVIDE expression
-Rule 23    expression -> NUMERO
-Rule 24    expression -> IDENTIFICADOR
-Rule 25    expression -> IDENTIFICADOR IGUAL expression
-Rule 26    empty -> <empty>
+Rule 5     declaration -> TIPODATO identificador_list PUNTOYCOMA
+Rule 6     identificador_list -> IDENTIFICADOR IGUAL expression
+Rule 7     identificador_list -> IDENTIFICADOR
+Rule 8     identificador_list -> IDENTIFICADOR COMA identificador_list
+Rule 9     condition -> expression COMPARADOR expression
+Rule 10    for_update -> IDENTIFICADOR SUMA SUMA
+Rule 11    for_update -> IDENTIFICADOR RESTA RESTA
+Rule 12    preprocessor_directive -> INCLUDE
+Rule 13    function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block
+Rule 14    block -> LLLAVE RLLAVE
+Rule 15    block -> LLLAVE statement_list RLLAVE
+Rule 16    statement_list -> statement
+Rule 17    statement_list -> statement statement_list
+Rule 18    statement -> declaration
+Rule 19    statement -> expression PUNTOYCOMA
+Rule 20    statement -> preprocessor_directive
+Rule 21    statement -> function_definition
+Rule 22    expression -> expression SUMA expression
+Rule 23    expression -> expression RESTA expression
+Rule 24    expression -> expression MULTI expression
+Rule 25    expression -> expression DIVIDE expression
+Rule 26    expression -> NUMERO
+Rule 27    expression -> IDENTIFICADOR
+Rule 28    expression -> IDENTIFICADOR IGUAL expression
+Rule 29    empty -> <empty>
 
 Terminals, with rules where they appear
 
-COMA                 : 
-COMPARADOR           : 7
-DIVIDE               : 22
+COMA                 : 8
+COMPARADOR           : 9
+DIVIDE               : 25
 FOR                  : 1
-IDENTIFICADOR        : 5 6 8 9 10 24 25
-IGUAL                : 5 25
-INCLUDE              : 
-LLLAVE               : 11 12
-LPAREN               : 1 10
-MULTI                : 21
-NUMERO               : 23
-PUNTOYCOMA           : 1 1 3 5 6 16
-RESTA                : 9 9 20
-RLLAVE               : 11 12
-RPAREN               : 1 10
-SUMA                 : 8 8 19
-TIPODATO             : 5 6 10
+IDENTIFICADOR        : 6 7 8 10 11 13 27 28
+IGUAL                : 6 28
+INCLUDE              : 12
+LLLAVE               : 14 15
+LPAREN               : 1 13
+MULTI                : 24
+NUMERO               : 26
+PUNTOYCOMA           : 1 1 3 5 19
+RESTA                : 11 11 23
+RLLAVE               : 14 15
+RPAREN               : 1 13
+SUMA                 : 10 10 22
+TIPODATO             : 5 13
 error                : 
 
 Nonterminals, with rules where they appear
 
-block                : 1 10
+block                : 1 13
 condition            : 1
-declaration          : 2 15
+declaration          : 2 18
 empty                : 4
-expression           : 3 5 7 7 16 19 19 20 20 21 21 22 22 25
+expression           : 3 6 9 9 19 22 22 23 23 24 24 25 25 28
 for_init             : 1
 for_update           : 1
-function_definition  : 18
-preprocessor_directive : 17
-statement            : 13 14 0
-statement_list       : 12 14
+function_definition  : 21
+identificador_list   : 5 8
+preprocessor_directive : 20
+statement            : 16 17 0
+statement_list       : 15 17
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+    (18) statement -> . declaration
+    (19) statement -> . expression PUNTOYCOMA
+    (20) statement -> . preprocessor_directive
+    (21) statement -> . function_definition
+    (5) declaration -> . TIPODATO identificador_list PUNTOYCOMA
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (12) preprocessor_directive -> . INCLUDE
+    (13) function_definition -> . TIPODATO IDENTIFICADOR LPAREN RPAREN block
+
+    FOR             shift and go to state 2
+    TIPODATO        shift and go to state 7
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+    INCLUDE         shift and go to state 10
+
+    statement                      shift and go to state 1
+    declaration                    shift and go to state 3
+    expression                     shift and go to state 4
+    preprocessor_directive         shift and go to state 5
+    function_definition            shift and go to state 6
+
+state 1
+
+    (0) S' -> statement .
+
+
+
+state 2
+
+    (1) statement -> FOR . LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+
+    LPAREN          shift and go to state 11
+
+
+state 3
+
+    (18) statement -> declaration .
+
+    $end            reduce using rule 18 (statement -> declaration .)
+    FOR             reduce using rule 18 (statement -> declaration .)
+    TIPODATO        reduce using rule 18 (statement -> declaration .)
+    NUMERO          reduce using rule 18 (statement -> declaration .)
+    IDENTIFICADOR   reduce using rule 18 (statement -> declaration .)
+    INCLUDE         reduce using rule 18 (statement -> declaration .)
+    RLLAVE          reduce using rule 18 (statement -> declaration .)
+
+
+state 4
+
+    (19) statement -> expression . PUNTOYCOMA
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      shift and go to state 12
+    SUMA            shift and go to state 13
+    RESTA           shift and go to state 14
+    MULTI           shift and go to state 15
+    DIVIDE          shift and go to state 16
+
+
+state 5
+
+    (20) statement -> preprocessor_directive .
+
+    $end            reduce using rule 20 (statement -> preprocessor_directive .)
+    FOR             reduce using rule 20 (statement -> preprocessor_directive .)
+    TIPODATO        reduce using rule 20 (statement -> preprocessor_directive .)
+    NUMERO          reduce using rule 20 (statement -> preprocessor_directive .)
+    IDENTIFICADOR   reduce using rule 20 (statement -> preprocessor_directive .)
+    INCLUDE         reduce using rule 20 (statement -> preprocessor_directive .)
+    RLLAVE          reduce using rule 20 (statement -> preprocessor_directive .)
+
+
+state 6
+
+    (21) statement -> function_definition .
+
+    $end            reduce using rule 21 (statement -> function_definition .)
+    FOR             reduce using rule 21 (statement -> function_definition .)
+    TIPODATO        reduce using rule 21 (statement -> function_definition .)
+    NUMERO          reduce using rule 21 (statement -> function_definition .)
+    IDENTIFICADOR   reduce using rule 21 (statement -> function_definition .)
+    INCLUDE         reduce using rule 21 (statement -> function_definition .)
+    RLLAVE          reduce using rule 21 (statement -> function_definition .)
+
+
+state 7
+
+    (5) declaration -> TIPODATO . identificador_list PUNTOYCOMA
+    (13) function_definition -> TIPODATO . IDENTIFICADOR LPAREN RPAREN block
+    (6) identificador_list -> . IDENTIFICADOR IGUAL expression
+    (7) identificador_list -> . IDENTIFICADOR
+    (8) identificador_list -> . IDENTIFICADOR COMA identificador_list
+
+    IDENTIFICADOR   shift and go to state 18
+
+    identificador_list             shift and go to state 17
+
+state 8
+
+    (26) expression -> NUMERO .
+
+    PUNTOYCOMA      reduce using rule 26 (expression -> NUMERO .)
+    SUMA            reduce using rule 26 (expression -> NUMERO .)
+    RESTA           reduce using rule 26 (expression -> NUMERO .)
+    MULTI           reduce using rule 26 (expression -> NUMERO .)
+    DIVIDE          reduce using rule 26 (expression -> NUMERO .)
+    COMPARADOR      reduce using rule 26 (expression -> NUMERO .)
+
+
+state 9
+
+    (27) expression -> IDENTIFICADOR .
+    (28) expression -> IDENTIFICADOR . IGUAL expression
+
+    PUNTOYCOMA      reduce using rule 27 (expression -> IDENTIFICADOR .)
+    SUMA            reduce using rule 27 (expression -> IDENTIFICADOR .)
+    RESTA           reduce using rule 27 (expression -> IDENTIFICADOR .)
+    MULTI           reduce using rule 27 (expression -> IDENTIFICADOR .)
+    DIVIDE          reduce using rule 27 (expression -> IDENTIFICADOR .)
+    COMPARADOR      reduce using rule 27 (expression -> IDENTIFICADOR .)
+    IGUAL           shift and go to state 19
+
+
+state 10
+
+    (12) preprocessor_directive -> INCLUDE .
+
+    $end            reduce using rule 12 (preprocessor_directive -> INCLUDE .)
+    FOR             reduce using rule 12 (preprocessor_directive -> INCLUDE .)
+    TIPODATO        reduce using rule 12 (preprocessor_directive -> INCLUDE .)
+    NUMERO          reduce using rule 12 (preprocessor_directive -> INCLUDE .)
+    IDENTIFICADOR   reduce using rule 12 (preprocessor_directive -> INCLUDE .)
+    INCLUDE         reduce using rule 12 (preprocessor_directive -> INCLUDE .)
+    RLLAVE          reduce using rule 12 (preprocessor_directive -> INCLUDE .)
+
+
+state 11
+
+    (1) statement -> FOR LPAREN . for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+    (2) for_init -> . declaration
+    (3) for_init -> . expression PUNTOYCOMA
+    (4) for_init -> . empty
+    (5) declaration -> . TIPODATO identificador_list PUNTOYCOMA
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (29) empty -> .
+
+    TIPODATO        shift and go to state 24
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+    PUNTOYCOMA      reduce using rule 29 (empty -> .)
+
+    for_init                       shift and go to state 20
+    declaration                    shift and go to state 21
+    expression                     shift and go to state 22
+    empty                          shift and go to state 23
+
+state 12
+
+    (19) statement -> expression PUNTOYCOMA .
+
+    $end            reduce using rule 19 (statement -> expression PUNTOYCOMA .)
+    FOR             reduce using rule 19 (statement -> expression PUNTOYCOMA .)
+    TIPODATO        reduce using rule 19 (statement -> expression PUNTOYCOMA .)
+    NUMERO          reduce using rule 19 (statement -> expression PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 19 (statement -> expression PUNTOYCOMA .)
+    INCLUDE         reduce using rule 19 (statement -> expression PUNTOYCOMA .)
+    RLLAVE          reduce using rule 19 (statement -> expression PUNTOYCOMA .)
+
+
+state 13
+
+    (22) expression -> expression SUMA . expression
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+
+    expression                     shift and go to state 25
+
+state 14
+
+    (23) expression -> expression RESTA . expression
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+
+    expression                     shift and go to state 26
+
+state 15
+
+    (24) expression -> expression MULTI . expression
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+
+    expression                     shift and go to state 27
+
+state 16
+
+    (25) expression -> expression DIVIDE . expression
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+
+    expression                     shift and go to state 28
+
+state 17
+
+    (5) declaration -> TIPODATO identificador_list . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 29
+
+
+state 18
+
+    (13) function_definition -> TIPODATO IDENTIFICADOR . LPAREN RPAREN block
+    (6) identificador_list -> IDENTIFICADOR . IGUAL expression
+    (7) identificador_list -> IDENTIFICADOR .
+    (8) identificador_list -> IDENTIFICADOR . COMA identificador_list
+
+    LPAREN          shift and go to state 30
+    IGUAL           shift and go to state 31
+    PUNTOYCOMA      reduce using rule 7 (identificador_list -> IDENTIFICADOR .)
+    COMA            shift and go to state 32
+
+
+state 19
+
+    (28) expression -> IDENTIFICADOR IGUAL . expression
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+
+    expression                     shift and go to state 33
+
+state 20
+
+    (1) statement -> FOR LPAREN for_init . PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+
+    PUNTOYCOMA      shift and go to state 34
+
+
+state 21
+
+    (2) for_init -> declaration .
+
+    PUNTOYCOMA      reduce using rule 2 (for_init -> declaration .)
+
+
+state 22
+
+    (3) for_init -> expression . PUNTOYCOMA
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      shift and go to state 35
+    SUMA            shift and go to state 13
+    RESTA           shift and go to state 14
+    MULTI           shift and go to state 15
+    DIVIDE          shift and go to state 16
+
+
+state 23
+
+    (4) for_init -> empty .
+
+    PUNTOYCOMA      reduce using rule 4 (for_init -> empty .)
+
+
+state 24
+
+    (5) declaration -> TIPODATO . identificador_list PUNTOYCOMA
+    (6) identificador_list -> . IDENTIFICADOR IGUAL expression
+    (7) identificador_list -> . IDENTIFICADOR
+    (8) identificador_list -> . IDENTIFICADOR COMA identificador_list
+
+    IDENTIFICADOR   shift and go to state 36
+
+    identificador_list             shift and go to state 17
+
+state 25
+
+    (22) expression -> expression SUMA expression .
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 22 (expression -> expression SUMA expression .)
+    SUMA            reduce using rule 22 (expression -> expression SUMA expression .)
+    RESTA           reduce using rule 22 (expression -> expression SUMA expression .)
+    COMPARADOR      reduce using rule 22 (expression -> expression SUMA expression .)
+    MULTI           shift and go to state 15
+    DIVIDE          shift and go to state 16
+
+  ! MULTI           [ reduce using rule 22 (expression -> expression SUMA expression .) ]
+  ! DIVIDE          [ reduce using rule 22 (expression -> expression SUMA expression .) ]
+  ! SUMA            [ shift and go to state 13 ]
+  ! RESTA           [ shift and go to state 14 ]
+
+
+state 26
+
+    (23) expression -> expression RESTA expression .
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 23 (expression -> expression RESTA expression .)
+    SUMA            reduce using rule 23 (expression -> expression RESTA expression .)
+    RESTA           reduce using rule 23 (expression -> expression RESTA expression .)
+    COMPARADOR      reduce using rule 23 (expression -> expression RESTA expression .)
+    MULTI           shift and go to state 15
+    DIVIDE          shift and go to state 16
+
+  ! MULTI           [ reduce using rule 23 (expression -> expression RESTA expression .) ]
+  ! DIVIDE          [ reduce using rule 23 (expression -> expression RESTA expression .) ]
+  ! SUMA            [ shift and go to state 13 ]
+  ! RESTA           [ shift and go to state 14 ]
+
+
+state 27
+
+    (24) expression -> expression MULTI expression .
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 24 (expression -> expression MULTI expression .)
+    SUMA            reduce using rule 24 (expression -> expression MULTI expression .)
+    RESTA           reduce using rule 24 (expression -> expression MULTI expression .)
+    MULTI           reduce using rule 24 (expression -> expression MULTI expression .)
+    DIVIDE          reduce using rule 24 (expression -> expression MULTI expression .)
+    COMPARADOR      reduce using rule 24 (expression -> expression MULTI expression .)
+
+  ! SUMA            [ shift and go to state 13 ]
+  ! RESTA           [ shift and go to state 14 ]
+  ! MULTI           [ shift and go to state 15 ]
+  ! DIVIDE          [ shift and go to state 16 ]
+
+
+state 28
+
+    (25) expression -> expression DIVIDE expression .
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 25 (expression -> expression DIVIDE expression .)
+    SUMA            reduce using rule 25 (expression -> expression DIVIDE expression .)
+    RESTA           reduce using rule 25 (expression -> expression DIVIDE expression .)
+    MULTI           reduce using rule 25 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 25 (expression -> expression DIVIDE expression .)
+    COMPARADOR      reduce using rule 25 (expression -> expression DIVIDE expression .)
+
+  ! SUMA            [ shift and go to state 13 ]
+  ! RESTA           [ shift and go to state 14 ]
+  ! MULTI           [ shift and go to state 15 ]
+  ! DIVIDE          [ shift and go to state 16 ]
+
+
+state 29
+
+    (5) declaration -> TIPODATO identificador_list PUNTOYCOMA .
+
+    $end            reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+    PUNTOYCOMA      reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+    FOR             reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+    TIPODATO        reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+    NUMERO          reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+    INCLUDE         reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+    RLLAVE          reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+
+
+state 30
+
+    (13) function_definition -> TIPODATO IDENTIFICADOR LPAREN . RPAREN block
+
+    RPAREN          shift and go to state 37
+
+
+state 31
+
+    (6) identificador_list -> IDENTIFICADOR IGUAL . expression
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+
+    expression                     shift and go to state 38
+
+state 32
+
+    (8) identificador_list -> IDENTIFICADOR COMA . identificador_list
+    (6) identificador_list -> . IDENTIFICADOR IGUAL expression
+    (7) identificador_list -> . IDENTIFICADOR
+    (8) identificador_list -> . IDENTIFICADOR COMA identificador_list
+
+    IDENTIFICADOR   shift and go to state 36
+
+    identificador_list             shift and go to state 39
+
+state 33
+
+    (28) expression -> IDENTIFICADOR IGUAL expression .
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for SUMA resolved as shift
+  ! shift/reduce conflict for RESTA resolved as shift
+  ! shift/reduce conflict for MULTI resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PUNTOYCOMA      reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .)
+    COMPARADOR      reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .)
+    SUMA            shift and go to state 13
+    RESTA           shift and go to state 14
+    MULTI           shift and go to state 15
+    DIVIDE          shift and go to state 16
+
+  ! SUMA            [ reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .) ]
+  ! RESTA           [ reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .) ]
+  ! MULTI           [ reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .) ]
+  ! DIVIDE          [ reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .) ]
+
+
+state 34
+
+    (1) statement -> FOR LPAREN for_init PUNTOYCOMA . condition PUNTOYCOMA for_update RPAREN block
+    (9) condition -> . expression COMPARADOR expression
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+
+    condition                      shift and go to state 40
+    expression                     shift and go to state 41
+
+state 35
+
+    (3) for_init -> expression PUNTOYCOMA .
+
+    PUNTOYCOMA      reduce using rule 3 (for_init -> expression PUNTOYCOMA .)
+
+
+state 36
+
+    (6) identificador_list -> IDENTIFICADOR . IGUAL expression
+    (7) identificador_list -> IDENTIFICADOR .
+    (8) identificador_list -> IDENTIFICADOR . COMA identificador_list
+
+    IGUAL           shift and go to state 31
+    PUNTOYCOMA      reduce using rule 7 (identificador_list -> IDENTIFICADOR .)
+    COMA            shift and go to state 32
+
+
+state 37
+
+    (13) function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN . block
+    (14) block -> . LLLAVE RLLAVE
+    (15) block -> . LLLAVE statement_list RLLAVE
+
+    LLLAVE          shift and go to state 43
+
+    block                          shift and go to state 42
+
+state 38
+
+    (6) identificador_list -> IDENTIFICADOR IGUAL expression .
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 6 (identificador_list -> IDENTIFICADOR IGUAL expression .)
+    SUMA            shift and go to state 13
+    RESTA           shift and go to state 14
+    MULTI           shift and go to state 15
+    DIVIDE          shift and go to state 16
+
+
+state 39
+
+    (8) identificador_list -> IDENTIFICADOR COMA identificador_list .
+
+    PUNTOYCOMA      reduce using rule 8 (identificador_list -> IDENTIFICADOR COMA identificador_list .)
+
+
+state 40
+
+    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition . PUNTOYCOMA for_update RPAREN block
+
+    PUNTOYCOMA      shift and go to state 44
+
+
+state 41
+
+    (9) condition -> expression . COMPARADOR expression
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    COMPARADOR      shift and go to state 45
+    SUMA            shift and go to state 13
+    RESTA           shift and go to state 14
+    MULTI           shift and go to state 15
+    DIVIDE          shift and go to state 16
+
+
+state 42
+
+    (13) function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .
+
+    $end            reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
+    FOR             reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
+    TIPODATO        reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
+    NUMERO          reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
+    IDENTIFICADOR   reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
+    INCLUDE         reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
+    RLLAVE          reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
+
+
+state 43
+
+    (14) block -> LLLAVE . RLLAVE
+    (15) block -> LLLAVE . statement_list RLLAVE
+    (16) statement_list -> . statement
+    (17) statement_list -> . statement statement_list
+    (1) statement -> . FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+    (18) statement -> . declaration
+    (19) statement -> . expression PUNTOYCOMA
+    (20) statement -> . preprocessor_directive
+    (21) statement -> . function_definition
+    (5) declaration -> . TIPODATO identificador_list PUNTOYCOMA
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (12) preprocessor_directive -> . INCLUDE
+    (13) function_definition -> . TIPODATO IDENTIFICADOR LPAREN RPAREN block
+
+    RLLAVE          shift and go to state 46
+    FOR             shift and go to state 2
+    TIPODATO        shift and go to state 7
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+    INCLUDE         shift and go to state 10
+
+    statement_list                 shift and go to state 47
+    statement                      shift and go to state 48
+    declaration                    shift and go to state 3
+    expression                     shift and go to state 4
+    preprocessor_directive         shift and go to state 5
+    function_definition            shift and go to state 6
+
+state 44
+
+    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA . for_update RPAREN block
+    (10) for_update -> . IDENTIFICADOR SUMA SUMA
+    (11) for_update -> . IDENTIFICADOR RESTA RESTA
+
+    IDENTIFICADOR   shift and go to state 50
+
+    for_update                     shift and go to state 49
+
+state 45
+
+    (9) condition -> expression COMPARADOR . expression
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+
+    expression                     shift and go to state 51
+
+state 46
+
+    (14) block -> LLLAVE RLLAVE .
+
+    $end            reduce using rule 14 (block -> LLLAVE RLLAVE .)
+    FOR             reduce using rule 14 (block -> LLLAVE RLLAVE .)
+    TIPODATO        reduce using rule 14 (block -> LLLAVE RLLAVE .)
+    NUMERO          reduce using rule 14 (block -> LLLAVE RLLAVE .)
+    IDENTIFICADOR   reduce using rule 14 (block -> LLLAVE RLLAVE .)
+    INCLUDE         reduce using rule 14 (block -> LLLAVE RLLAVE .)
+    RLLAVE          reduce using rule 14 (block -> LLLAVE RLLAVE .)
+
+
+state 47
+
+    (15) block -> LLLAVE statement_list . RLLAVE
+
+    RLLAVE          shift and go to state 52
+
+
+state 48
+
+    (16) statement_list -> statement .
+    (17) statement_list -> statement . statement_list
+    (16) statement_list -> . statement
+    (17) statement_list -> . statement statement_list
+    (1) statement -> . FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+    (18) statement -> . declaration
+    (19) statement -> . expression PUNTOYCOMA
+    (20) statement -> . preprocessor_directive
+    (21) statement -> . function_definition
+    (5) declaration -> . TIPODATO identificador_list PUNTOYCOMA
+    (22) expression -> . expression SUMA expression
+    (23) expression -> . expression RESTA expression
+    (24) expression -> . expression MULTI expression
+    (25) expression -> . expression DIVIDE expression
+    (26) expression -> . NUMERO
+    (27) expression -> . IDENTIFICADOR
+    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (12) preprocessor_directive -> . INCLUDE
+    (13) function_definition -> . TIPODATO IDENTIFICADOR LPAREN RPAREN block
+
+    RLLAVE          reduce using rule 16 (statement_list -> statement .)
+    FOR             shift and go to state 2
+    TIPODATO        shift and go to state 7
+    NUMERO          shift and go to state 8
+    IDENTIFICADOR   shift and go to state 9
+    INCLUDE         shift and go to state 10
+
+    statement                      shift and go to state 48
+    statement_list                 shift and go to state 53
+    declaration                    shift and go to state 3
+    expression                     shift and go to state 4
+    preprocessor_directive         shift and go to state 5
+    function_definition            shift and go to state 6
+
+state 49
+
+    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update . RPAREN block
+
+    RPAREN          shift and go to state 54
+
+
+state 50
+
+    (10) for_update -> IDENTIFICADOR . SUMA SUMA
+    (11) for_update -> IDENTIFICADOR . RESTA RESTA
+
+    SUMA            shift and go to state 55
+    RESTA           shift and go to state 56
+
+
+state 51
+
+    (9) condition -> expression COMPARADOR expression .
+    (22) expression -> expression . SUMA expression
+    (23) expression -> expression . RESTA expression
+    (24) expression -> expression . MULTI expression
+    (25) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 9 (condition -> expression COMPARADOR expression .)
+    SUMA            shift and go to state 13
+    RESTA           shift and go to state 14
+    MULTI           shift and go to state 15
+    DIVIDE          shift and go to state 16
+
+
+state 52
+
+    (15) block -> LLLAVE statement_list RLLAVE .
+
+    $end            reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
+    FOR             reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
+    TIPODATO        reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
+    NUMERO          reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
+    IDENTIFICADOR   reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
+    INCLUDE         reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
+    RLLAVE          reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
+
+
+state 53
+
+    (17) statement_list -> statement statement_list .
+
+    RLLAVE          reduce using rule 17 (statement_list -> statement statement_list .)
+
+
+state 54
+
+    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN . block
+    (14) block -> . LLLAVE RLLAVE
+    (15) block -> . LLLAVE statement_list RLLAVE
+
+    LLLAVE          shift and go to state 43
+
+    block                          shift and go to state 57
+
+state 55
+
+    (10) for_update -> IDENTIFICADOR SUMA . SUMA
+
+    SUMA            shift and go to state 58
+
+
+state 56
+
+    (11) for_update -> IDENTIFICADOR RESTA . RESTA
+
+    RESTA           shift and go to state 59
+
+
+state 57
+
+    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .
+
+    $end            reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
+    FOR             reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
+    TIPODATO        reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
+    NUMERO          reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
+    IDENTIFICADOR   reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
+    INCLUDE         reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
+    RLLAVE          reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
+
+
+state 58
+
+    (10) for_update -> IDENTIFICADOR SUMA SUMA .
+
+    RPAREN          reduce using rule 10 (for_update -> IDENTIFICADOR SUMA SUMA .)
+
+
+state 59
+
+    (11) for_update -> IDENTIFICADOR RESTA RESTA .
+
+    RPAREN          reduce using rule 11 (for_update -> IDENTIFICADOR RESTA RESTA .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for SUMA in state 33 resolved as shift
+WARNING: shift/reduce conflict for RESTA in state 33 resolved as shift
+WARNING: shift/reduce conflict for MULTI in state 33 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 33 resolved as shift

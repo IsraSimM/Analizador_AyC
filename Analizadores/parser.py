@@ -21,12 +21,20 @@ def p_for_init(p):
 
 # Declaración de variables
 def p_declaration(p):
-    '''declaration : TIPODATO IDENTIFICADOR IGUAL expression PUNTOYCOMA
-                   | TIPODATO IDENTIFICADOR PUNTOYCOMA'''
-    if len(p) == 6:
-        p[0] = ('declaration', p[1], p[2], ('assign', p[2], p[4]))
+    '''declaration : TIPODATO identificador_list PUNTOYCOMA'''
+    p[0] = ('declaration', p[1], p[2])
+
+# Lista de identificadores con posibles asignaciones
+def p_identificador_list(p):
+    '''identificador_list : IDENTIFICADOR IGUAL expression
+                          | IDENTIFICADOR
+                          | IDENTIFICADOR COMA identificador_list'''
+    if len(p) == 4:
+        p[0] = [('assign', p[1], p[3])] + p[3]
+    elif len(p) == 2:
+        p[0] = [p[1]]
     else:
-        p[0] = ('declaration', p[1], p[2])
+        p[0] = [p[1]] + p[3]
 
 # Condición del for i < 10
 def p_condition(p):

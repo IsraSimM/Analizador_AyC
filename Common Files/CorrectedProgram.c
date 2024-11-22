@@ -2,10 +2,11 @@
 #include <math.h>
 
 int main() {
-    float comision, sueldo_diario, sueldo_semanal, sueldos_totales[50];
+    float comision, sueldo_diario, sueldo_semanal;
     int no_empleado, edad, faltas, c;
     char categoria;
     float suma_total = 0;
+    float sueldos_totales[50];
 
     for (c = 1; c <= 50; c++) {
         printf("Escribe tu numero de empleado: ");
