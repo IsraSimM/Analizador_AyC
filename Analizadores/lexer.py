@@ -96,7 +96,9 @@ def t_error(t):
 lexer = lex.lex()
 
 if __name__ == "__main__": 
-    data = input("Ingrese la expresión a analizar: ") 
+    with open("Common Files\TesterFile.c", "r") as file:
+        data = file.read()
+
     lexer.input(data) 
     print(f"Analizando: {data}") 
 

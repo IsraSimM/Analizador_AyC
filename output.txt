@@ -78,7 +78,7 @@ RPAREN )
 PUNTOYCOMA ;
 PRINTF printf
 LPAREN (
-CADENA "Escribe tu categoría: "
+CADENA "Escribe tu categorÃ­a: "
 RPAREN )
 PUNTOYCOMA ;
 IDENTIFICADOR getchar
