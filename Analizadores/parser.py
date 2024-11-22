@@ -30,7 +30,7 @@ def p_identificador_list(p):
                           | IDENTIFICADOR
                           | IDENTIFICADOR COMA identificador_list'''
     if len(p) == 4:
-        p[0] = [('assign', p[1], p[3])] + p[3]
+        p[0] = [('assign', p[1], p[3])] + list(p[3])
     elif len(p) == 2:
         p[0] = [p[1]]
     else:
@@ -126,6 +126,7 @@ parser = yacc.yacc()
 
 # Prueba del analizador
 if __name__ == "__main__":
-    data = input("Ingrese la expresión a analizar: ")
+    with open("Common Files\TesterFile.c", "r") as file:
+        data = file.read()
     result = parser.parse(data, lexer=lexer)
     print(f"Árbol de sintaxis: {result}")
