@@ -1,7 +1,7 @@
 import ply.yacc as yacc
-from lexer import *  
+from lexer import *  # Importar tokens definidos en lexer.py
 
-# Orden de ejecucion 
+# Definir precedencia y asociación de operadores
 precedence = (
     ('left', 'SUMA', 'RESTA'),
     ('left', 'MULTI', 'DIVIDE'),
@@ -12,7 +12,7 @@ def p_statement_for(p):
     '''statement : FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block'''
     p[0] = ('for', p[3], p[5], p[7], p[9])
 
-#declaracion de la variable de inicio del bucle int i = 0;
+# Declaración de la variable de inicio del bucle int i = 0;
 def p_for_init(p):
     '''for_init : declaration
                 | expression PUNTOYCOMA
@@ -33,17 +33,18 @@ def p_condition(p):
     '''condition : expression COMPARADOR expression'''
     p[0] = ('condition', p[1], p[2], p[3])
 
-# actualización del for i++
+# Actualización del for i++
 def p_for_update(p):
     '''for_update : IDENTIFICADOR SUMA SUMA
                   | IDENTIFICADOR RESTA RESTA'''
     p[0] = ('update', p[1], '++' if p[2] == '+' else '--')
 
-#includes
+# Directivas de preprocesador
+def p_preprocessor_directive(p):
     '''preprocessor_directive : INCLUDE'''
     p[0] = ('include', p[1])
 
-# funciones int main() { ... }
+# Funciones int main() { ... }
 def p_function_definition(p):
     '''function_definition : TIPODATO IDENTIFICADOR LPAREN RPAREN block'''
     p[0] = ('function', p[1], p[2], p[5])
@@ -57,7 +58,7 @@ def p_block(p):
     else:
         p[0] = ('block', p[2])
 
-#lista de declaraciones
+# Lista de declaraciones
 def p_statement_list(p):
     '''statement_list : statement
                       | statement statement_list'''
@@ -74,7 +75,7 @@ def p_statement(p):
                  | function_definition'''
     p[0] = p[1]
 
-# Operaciones  suma, resta, multiplicación, división
+# Operaciones de suma, resta, multiplicación, división
 def p_expression_binop(p):
     '''expression : expression SUMA expression
                   | expression RESTA expression
@@ -112,8 +113,10 @@ def p_error(p):
     else:
         print("Syntax error at EOF")
 
+# Crear el analizador sintáctico
 parser = yacc.yacc()
 
+# Prueba del analizador
 if __name__ == "__main__":
     data = input("Ingrese la expresión a analizar: ")
     result = parser.parse(data, lexer=lexer)

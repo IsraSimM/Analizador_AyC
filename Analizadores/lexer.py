@@ -3,7 +3,7 @@ import ply.lex as lex
 # Definir todos los tokens que el lexer debe reconocer
 tokens = [
     'NUMERO', 'SUMA', 'RESTA', 'MULTI', 'DIVIDE', 'LPAREN', 'RPAREN', 'IDENTIFICADOR', 
-    'COMPARADOR', 'PUNTOYCOMA', 'IGUAL', 'LLLAVE', 'RLLAVE', 'FOR', 'TIPODATO', 'INCLUDE'
+    'COMPARADOR', 'PUNTOYCOMA', 'IGUAL', 'LLLAVE', 'RLLAVE', 'FOR', 'TIPODATO', 'INCLUDE', 'COMA'
 ]
 
 # Expresiones regulares para operadores y delimitadores
@@ -17,6 +17,7 @@ t_PUNTOYCOMA = r';'
 t_IGUAL = r'='
 t_LLLAVE = r'\{'
 t_RLLAVE = r'\}'
+t_COMA = r','
 t_COMPARADOR = r'==|!=|<=|>=|<|>'
 t_ignore = ' \t\n'  # Ignorar espacios, tabulaciones y nuevas líneas
 

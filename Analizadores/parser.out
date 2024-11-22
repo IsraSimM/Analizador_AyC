@@ -1,0 +1,72 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COMA
+    INCLUDE
+
+Grammar
+
+Rule 0     S' -> statement
+Rule 1     statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+Rule 2     for_init -> declaration
+Rule 3     for_init -> expression PUNTOYCOMA
+Rule 4     for_init -> empty
+Rule 5     declaration -> TIPODATO IDENTIFICADOR IGUAL expression PUNTOYCOMA
+Rule 6     declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA
+Rule 7     condition -> expression COMPARADOR expression
+Rule 8     for_update -> IDENTIFICADOR SUMA SUMA
+Rule 9     for_update -> IDENTIFICADOR RESTA RESTA
+Rule 10    function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block
+Rule 11    block -> LLLAVE RLLAVE
+Rule 12    block -> LLLAVE statement_list RLLAVE
+Rule 13    statement_list -> statement
+Rule 14    statement_list -> statement statement_list
+Rule 15    statement -> declaration
+Rule 16    statement -> expression PUNTOYCOMA
+Rule 17    statement -> preprocessor_directive
+Rule 18    statement -> function_definition
+Rule 19    expression -> expression SUMA expression
+Rule 20    expression -> expression RESTA expression
+Rule 21    expression -> expression MULTI expression
+Rule 22    expression -> expression DIVIDE expression
+Rule 23    expression -> NUMERO
+Rule 24    expression -> IDENTIFICADOR
+Rule 25    expression -> IDENTIFICADOR IGUAL expression
+Rule 26    empty -> <empty>
+
+Terminals, with rules where they appear
+
+COMA                 : 
+COMPARADOR           : 7
+DIVIDE               : 22
+FOR                  : 1
+IDENTIFICADOR        : 5 6 8 9 10 24 25
+IGUAL                : 5 25
+INCLUDE              : 
+LLLAVE               : 11 12
+LPAREN               : 1 10
+MULTI                : 21
+NUMERO               : 23
+PUNTOYCOMA           : 1 1 3 5 6 16
+RESTA                : 9 9 20
+RLLAVE               : 11 12
+RPAREN               : 1 10
+SUMA                 : 8 8 19
+TIPODATO             : 5 6 10
+error                : 
+
+Nonterminals, with rules where they appear
+
+block                : 1 10
+condition            : 1
+declaration          : 2 15
+empty                : 4
+expression           : 3 5 7 7 16 19 19 20 20 21 21 22 22 25
+for_init             : 1
+for_update           : 1
+function_definition  : 18
+preprocessor_directive : 17
+statement            : 13 14 0
+statement_list       : 12 14
+
