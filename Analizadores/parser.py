@@ -126,6 +126,15 @@ parser = yacc.yacc()
 
 # Prueba del analizador
 if __name__ == "__main__":
-    data = input("Ingrese la expresión a analizar: ")
-    result = parser.parse(data, lexer=lexer)
-    print(f"Árbol de sintaxis: {result}")
+    try:
+        with open("../Common Files/TesterFile.c", "r") as file:
+            data = file.read()
+        print(f"Analizando: {data}")
+        result = parser.parse(data, lexer=lexer)
+        print(f"Resultado del análisis: {result}")
+        with open("parseralex.txt", "w") as file:
+            file.write(str(result))
+    except FileNotFoundError:
+        print("No se encuentra el archivo TesterFile.c")
+    except Exception as e:
+        print(f"Error durante el análisis: {e}")
