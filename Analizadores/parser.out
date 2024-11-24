@@ -2,920 +2,1490 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    AMPERSAND
-    CADENA
-    CARACTER
     CHAR
-    CORCHETEDER
-    CORCHETEIZQ
-    ELSE
     FLOAT
-    IF
-    PRINTF
     PUNTO
-    SCANF
 
 Grammar
 
-Rule 0     S' -> statement
-Rule 1     statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
-Rule 2     for_init -> declaration
-Rule 3     for_init -> expression PUNTOYCOMA
-Rule 4     for_init -> empty
-Rule 5     declaration -> TIPODATO identificador_list PUNTOYCOMA
-Rule 6     identificador_list -> IDENTIFICADOR IGUAL expression
-Rule 7     identificador_list -> IDENTIFICADOR
-Rule 8     identificador_list -> IDENTIFICADOR COMA identificador_list
-Rule 9     condition -> expression COMPARADOR expression
-Rule 10    for_update -> IDENTIFICADOR SUMA SUMA
-Rule 11    for_update -> IDENTIFICADOR RESTA RESTA
-Rule 12    preprocessor_directive -> INCLUDE
-Rule 13    function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block
-Rule 14    block -> LLLAVE RLLAVE
-Rule 15    block -> LLLAVE statement_list RLLAVE
-Rule 16    statement_list -> statement
-Rule 17    statement_list -> statement statement_list
-Rule 18    statement -> declaration
-Rule 19    statement -> expression PUNTOYCOMA
-Rule 20    statement -> preprocessor_directive
-Rule 21    statement -> function_definition
-Rule 22    expression -> expression SUMA expression
-Rule 23    expression -> expression RESTA expression
-Rule 24    expression -> expression MULTI expression
-Rule 25    expression -> expression DIVIDE expression
-Rule 26    expression -> NUMERO
-Rule 27    expression -> IDENTIFICADOR
-Rule 28    expression -> IDENTIFICADOR IGUAL expression
-Rule 29    empty -> <empty>
+Rule 0     S' -> program
+Rule 1     program -> preprocessor_directive_list function_definition_list
+Rule 2     preprocessor_directive_list -> preprocessor_directive
+Rule 3     preprocessor_directive_list -> preprocessor_directive preprocessor_directive_list
+Rule 4     preprocessor_directive -> INCLUDE
+Rule 5     function_definition_list -> function_definition
+Rule 6     function_definition_list -> function_definition function_definition_list
+Rule 7     function_definition -> TIPODATO IDENTIFICADOR LPAREN parameter_list RPAREN block
+Rule 8     parameter_list -> declaration
+Rule 9     parameter_list -> declaration COMA parameter_list
+Rule 10    parameter_list -> empty
+Rule 11    block -> LLLAVE RLLAVE
+Rule 12    block -> LLLAVE statement_list RLLAVE
+Rule 13    statement_list -> statement
+Rule 14    statement_list -> statement statement_list
+Rule 15    statement -> declaration
+Rule 16    statement -> assignment_statement
+Rule 17    statement -> printf_statement
+Rule 18    statement -> scanf_statement
+Rule 19    statement -> for_statement
+Rule 20    statement -> if_statement
+Rule 21    statement -> else_statement
+Rule 22    statement -> function_call
+Rule 23    declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA
+Rule 24    declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA
+Rule 25    assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA
+Rule 26    assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA
+Rule 27    expression -> expression SUMA expression
+Rule 28    expression -> expression RESTA expression
+Rule 29    expression -> expression MULTI expression
+Rule 30    expression -> expression DIVIDE expression
+Rule 31    expression -> NUMERO
+Rule 32    expression -> IDENTIFICADOR
+Rule 33    expression -> CADENA
+Rule 34    expression -> CARACTER
+Rule 35    expression -> LPAREN expression RPAREN
+Rule 36    function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA
+Rule 37    printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA
+Rule 38    printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA
+Rule 39    scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA
+Rule 40    if_statement -> IF LPAREN condition RPAREN block
+Rule 41    else_statement -> ELSE block
+Rule 42    condition -> expression COMPARADOR expression
+Rule 43    for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block
+Rule 44    empty -> <empty>
 
 Terminals, with rules where they appear
 
-AMPERSAND            : 
-CADENA               : 
-CARACTER             : 
+AMPERSAND            : 39
+CADENA               : 33 37 38 39
+CARACTER             : 34
 CHAR                 : 
-COMA                 : 8
-COMPARADOR           : 9
-CORCHETEDER          : 
-CORCHETEIZQ          : 
-DIVIDE               : 25
-ELSE                 : 
+COMA                 : 9 38 39
+COMPARADOR           : 42
+CORCHETEDER          : 24 26
+CORCHETEIZQ          : 24 26
+DIVIDE               : 30
+ELSE                 : 41
 FLOAT                : 
-FOR                  : 1
-IDENTIFICADOR        : 6 7 8 10 11 13 27 28
-IF                   : 
-IGUAL                : 6 28
-INCLUDE              : 12
-LLLAVE               : 14 15
-LPAREN               : 1 13
-MULTI                : 24
-NUMERO               : 26
-PRINTF               : 
+FOR                  : 43
+IDENTIFICADOR        : 7 23 24 25 26 32 36 39
+IF                   : 40
+IGUAL                : 25 26
+INCLUDE              : 4
+LLLAVE               : 11 12
+LPAREN               : 7 35 36 37 38 39 40 43
+MULTI                : 29
+NUMERO               : 24 31
+PRINTF               : 37 38
 PUNTO                : 
-PUNTOYCOMA           : 1 1 3 5 19
-RESTA                : 11 11 23
-RLLAVE               : 14 15
-RPAREN               : 1 13
-SCANF                : 
-SUMA                 : 10 10 22
-TIPODATO             : 5 13
+PUNTOYCOMA           : 23 24 25 26 36 37 38 39 43 43
+RESTA                : 28
+RLLAVE               : 11 12
+RPAREN               : 7 35 36 37 38 39 40 43
+SCANF                : 39
+SUMA                 : 27
+TIPODATO             : 7 23 24
 error                : 
 
 Nonterminals, with rules where they appear
 
-block                : 1 13
-condition            : 1
-declaration          : 2 18
-empty                : 4
-expression           : 3 6 9 9 19 22 22 23 23 24 24 25 25 28
-for_init             : 1
-for_update           : 1
-function_definition  : 21
-identificador_list   : 5 8
-preprocessor_directive : 20
-statement            : 16 17 0
-statement_list       : 15 17
+assignment_statement : 16 43 43
+block                : 7 40 41 43
+condition            : 40 43
+declaration          : 8 9 15
+else_statement       : 21
+empty                : 10
+expression           : 25 26 26 27 27 28 28 29 29 30 30 35 38 42 42
+for_statement        : 19
+function_call        : 22
+function_definition  : 5 6
+function_definition_list : 1 6
+if_statement         : 20
+parameter_list       : 7 9
+preprocessor_directive : 2 3
+preprocessor_directive_list : 1 3
+printf_statement     : 17
+program              : 0
+scanf_statement      : 18
+statement            : 13 14
+statement_list       : 12 14
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . statement
-    (1) statement -> . FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
-    (18) statement -> . declaration
-    (19) statement -> . expression PUNTOYCOMA
-    (20) statement -> . preprocessor_directive
-    (21) statement -> . function_definition
-    (5) declaration -> . TIPODATO identificador_list PUNTOYCOMA
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
-    (12) preprocessor_directive -> . INCLUDE
-    (13) function_definition -> . TIPODATO IDENTIFICADOR LPAREN RPAREN block
+    (0) S' -> . program
+    (1) program -> . preprocessor_directive_list function_definition_list
+    (2) preprocessor_directive_list -> . preprocessor_directive
+    (3) preprocessor_directive_list -> . preprocessor_directive preprocessor_directive_list
+    (4) preprocessor_directive -> . INCLUDE
 
-    FOR             shift and go to state 2
-    TIPODATO        shift and go to state 7
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
-    INCLUDE         shift and go to state 10
+    INCLUDE         shift and go to state 4
 
-    statement                      shift and go to state 1
-    declaration                    shift and go to state 3
-    expression                     shift and go to state 4
-    preprocessor_directive         shift and go to state 5
-    function_definition            shift and go to state 6
+    program                        shift and go to state 1
+    preprocessor_directive_list    shift and go to state 2
+    preprocessor_directive         shift and go to state 3
 
 state 1
 
-    (0) S' -> statement .
+    (0) S' -> program .
 
 
 
 state 2
 
-    (1) statement -> FOR . LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+    (1) program -> preprocessor_directive_list . function_definition_list
+    (5) function_definition_list -> . function_definition
+    (6) function_definition_list -> . function_definition function_definition_list
+    (7) function_definition -> . TIPODATO IDENTIFICADOR LPAREN parameter_list RPAREN block
 
-    LPAREN          shift and go to state 11
+    TIPODATO        shift and go to state 7
 
+    function_definition_list       shift and go to state 5
+    function_definition            shift and go to state 6
 
 state 3
 
-    (18) statement -> declaration .
+    (2) preprocessor_directive_list -> preprocessor_directive .
+    (3) preprocessor_directive_list -> preprocessor_directive . preprocessor_directive_list
+    (2) preprocessor_directive_list -> . preprocessor_directive
+    (3) preprocessor_directive_list -> . preprocessor_directive preprocessor_directive_list
+    (4) preprocessor_directive -> . INCLUDE
 
-    $end            reduce using rule 18 (statement -> declaration .)
-    FOR             reduce using rule 18 (statement -> declaration .)
-    TIPODATO        reduce using rule 18 (statement -> declaration .)
-    NUMERO          reduce using rule 18 (statement -> declaration .)
-    IDENTIFICADOR   reduce using rule 18 (statement -> declaration .)
-    INCLUDE         reduce using rule 18 (statement -> declaration .)
-    RLLAVE          reduce using rule 18 (statement -> declaration .)
+    TIPODATO        reduce using rule 2 (preprocessor_directive_list -> preprocessor_directive .)
+    INCLUDE         shift and go to state 4
 
+    preprocessor_directive         shift and go to state 3
+    preprocessor_directive_list    shift and go to state 8
 
 state 4
 
-    (19) statement -> expression . PUNTOYCOMA
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (4) preprocessor_directive -> INCLUDE .
 
-    PUNTOYCOMA      shift and go to state 12
-    SUMA            shift and go to state 13
-    RESTA           shift and go to state 14
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
+    INCLUDE         reduce using rule 4 (preprocessor_directive -> INCLUDE .)
+    TIPODATO        reduce using rule 4 (preprocessor_directive -> INCLUDE .)
 
 
 state 5
 
-    (20) statement -> preprocessor_directive .
+    (1) program -> preprocessor_directive_list function_definition_list .
 
-    $end            reduce using rule 20 (statement -> preprocessor_directive .)
-    FOR             reduce using rule 20 (statement -> preprocessor_directive .)
-    TIPODATO        reduce using rule 20 (statement -> preprocessor_directive .)
-    NUMERO          reduce using rule 20 (statement -> preprocessor_directive .)
-    IDENTIFICADOR   reduce using rule 20 (statement -> preprocessor_directive .)
-    INCLUDE         reduce using rule 20 (statement -> preprocessor_directive .)
-    RLLAVE          reduce using rule 20 (statement -> preprocessor_directive .)
+    $end            reduce using rule 1 (program -> preprocessor_directive_list function_definition_list .)
 
 
 state 6
 
-    (21) statement -> function_definition .
+    (5) function_definition_list -> function_definition .
+    (6) function_definition_list -> function_definition . function_definition_list
+    (5) function_definition_list -> . function_definition
+    (6) function_definition_list -> . function_definition function_definition_list
+    (7) function_definition -> . TIPODATO IDENTIFICADOR LPAREN parameter_list RPAREN block
 
-    $end            reduce using rule 21 (statement -> function_definition .)
-    FOR             reduce using rule 21 (statement -> function_definition .)
-    TIPODATO        reduce using rule 21 (statement -> function_definition .)
-    NUMERO          reduce using rule 21 (statement -> function_definition .)
-    IDENTIFICADOR   reduce using rule 21 (statement -> function_definition .)
-    INCLUDE         reduce using rule 21 (statement -> function_definition .)
-    RLLAVE          reduce using rule 21 (statement -> function_definition .)
+    $end            reduce using rule 5 (function_definition_list -> function_definition .)
+    TIPODATO        shift and go to state 7
 
+    function_definition            shift and go to state 6
+    function_definition_list       shift and go to state 9
 
 state 7
 
-    (5) declaration -> TIPODATO . identificador_list PUNTOYCOMA
-    (13) function_definition -> TIPODATO . IDENTIFICADOR LPAREN RPAREN block
-    (6) identificador_list -> . IDENTIFICADOR IGUAL expression
-    (7) identificador_list -> . IDENTIFICADOR
-    (8) identificador_list -> . IDENTIFICADOR COMA identificador_list
+    (7) function_definition -> TIPODATO . IDENTIFICADOR LPAREN parameter_list RPAREN block
 
-    IDENTIFICADOR   shift and go to state 18
+    IDENTIFICADOR   shift and go to state 10
 
-    identificador_list             shift and go to state 17
 
 state 8
 
-    (26) expression -> NUMERO .
+    (3) preprocessor_directive_list -> preprocessor_directive preprocessor_directive_list .
 
-    PUNTOYCOMA      reduce using rule 26 (expression -> NUMERO .)
-    SUMA            reduce using rule 26 (expression -> NUMERO .)
-    RESTA           reduce using rule 26 (expression -> NUMERO .)
-    MULTI           reduce using rule 26 (expression -> NUMERO .)
-    DIVIDE          reduce using rule 26 (expression -> NUMERO .)
-    COMPARADOR      reduce using rule 26 (expression -> NUMERO .)
+    TIPODATO        reduce using rule 3 (preprocessor_directive_list -> preprocessor_directive preprocessor_directive_list .)
 
 
 state 9
 
-    (27) expression -> IDENTIFICADOR .
-    (28) expression -> IDENTIFICADOR . IGUAL expression
+    (6) function_definition_list -> function_definition function_definition_list .
 
-    PUNTOYCOMA      reduce using rule 27 (expression -> IDENTIFICADOR .)
-    SUMA            reduce using rule 27 (expression -> IDENTIFICADOR .)
-    RESTA           reduce using rule 27 (expression -> IDENTIFICADOR .)
-    MULTI           reduce using rule 27 (expression -> IDENTIFICADOR .)
-    DIVIDE          reduce using rule 27 (expression -> IDENTIFICADOR .)
-    COMPARADOR      reduce using rule 27 (expression -> IDENTIFICADOR .)
-    IGUAL           shift and go to state 19
+    $end            reduce using rule 6 (function_definition_list -> function_definition function_definition_list .)
 
 
 state 10
 
-    (12) preprocessor_directive -> INCLUDE .
+    (7) function_definition -> TIPODATO IDENTIFICADOR . LPAREN parameter_list RPAREN block
 
-    $end            reduce using rule 12 (preprocessor_directive -> INCLUDE .)
-    FOR             reduce using rule 12 (preprocessor_directive -> INCLUDE .)
-    TIPODATO        reduce using rule 12 (preprocessor_directive -> INCLUDE .)
-    NUMERO          reduce using rule 12 (preprocessor_directive -> INCLUDE .)
-    IDENTIFICADOR   reduce using rule 12 (preprocessor_directive -> INCLUDE .)
-    INCLUDE         reduce using rule 12 (preprocessor_directive -> INCLUDE .)
-    RLLAVE          reduce using rule 12 (preprocessor_directive -> INCLUDE .)
+    LPAREN          shift and go to state 11
 
 
 state 11
 
-    (1) statement -> FOR LPAREN . for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
-    (2) for_init -> . declaration
-    (3) for_init -> . expression PUNTOYCOMA
-    (4) for_init -> . empty
-    (5) declaration -> . TIPODATO identificador_list PUNTOYCOMA
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
-    (29) empty -> .
+    (7) function_definition -> TIPODATO IDENTIFICADOR LPAREN . parameter_list RPAREN block
+    (8) parameter_list -> . declaration
+    (9) parameter_list -> . declaration COMA parameter_list
+    (10) parameter_list -> . empty
+    (23) declaration -> . TIPODATO IDENTIFICADOR PUNTOYCOMA
+    (24) declaration -> . TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA
+    (44) empty -> .
 
-    TIPODATO        shift and go to state 24
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
-    PUNTOYCOMA      reduce using rule 29 (empty -> .)
+    TIPODATO        shift and go to state 12
+    RPAREN          reduce using rule 44 (empty -> .)
 
-    for_init                       shift and go to state 20
-    declaration                    shift and go to state 21
-    expression                     shift and go to state 22
-    empty                          shift and go to state 23
+    parameter_list                 shift and go to state 13
+    declaration                    shift and go to state 14
+    empty                          shift and go to state 15
 
 state 12
 
-    (19) statement -> expression PUNTOYCOMA .
+    (23) declaration -> TIPODATO . IDENTIFICADOR PUNTOYCOMA
+    (24) declaration -> TIPODATO . IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA
 
-    $end            reduce using rule 19 (statement -> expression PUNTOYCOMA .)
-    FOR             reduce using rule 19 (statement -> expression PUNTOYCOMA .)
-    TIPODATO        reduce using rule 19 (statement -> expression PUNTOYCOMA .)
-    NUMERO          reduce using rule 19 (statement -> expression PUNTOYCOMA .)
-    IDENTIFICADOR   reduce using rule 19 (statement -> expression PUNTOYCOMA .)
-    INCLUDE         reduce using rule 19 (statement -> expression PUNTOYCOMA .)
-    RLLAVE          reduce using rule 19 (statement -> expression PUNTOYCOMA .)
+    IDENTIFICADOR   shift and go to state 16
 
 
 state 13
 
-    (22) expression -> expression SUMA . expression
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (7) function_definition -> TIPODATO IDENTIFICADOR LPAREN parameter_list . RPAREN block
 
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
+    RPAREN          shift and go to state 17
 
-    expression                     shift and go to state 25
 
 state 14
 
-    (23) expression -> expression RESTA . expression
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (8) parameter_list -> declaration .
+    (9) parameter_list -> declaration . COMA parameter_list
 
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
+    RPAREN          reduce using rule 8 (parameter_list -> declaration .)
+    COMA            shift and go to state 18
 
-    expression                     shift and go to state 26
 
 state 15
 
-    (24) expression -> expression MULTI . expression
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (10) parameter_list -> empty .
 
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
+    RPAREN          reduce using rule 10 (parameter_list -> empty .)
 
-    expression                     shift and go to state 27
 
 state 16
 
-    (25) expression -> expression DIVIDE . expression
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (23) declaration -> TIPODATO IDENTIFICADOR . PUNTOYCOMA
+    (24) declaration -> TIPODATO IDENTIFICADOR . CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA
 
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
+    PUNTOYCOMA      shift and go to state 19
+    CORCHETEIZQ     shift and go to state 20
 
-    expression                     shift and go to state 28
 
 state 17
 
-    (5) declaration -> TIPODATO identificador_list . PUNTOYCOMA
+    (7) function_definition -> TIPODATO IDENTIFICADOR LPAREN parameter_list RPAREN . block
+    (11) block -> . LLLAVE RLLAVE
+    (12) block -> . LLLAVE statement_list RLLAVE
 
-    PUNTOYCOMA      shift and go to state 29
+    LLLAVE          shift and go to state 22
 
+    block                          shift and go to state 21
 
 state 18
 
-    (13) function_definition -> TIPODATO IDENTIFICADOR . LPAREN RPAREN block
-    (6) identificador_list -> IDENTIFICADOR . IGUAL expression
-    (7) identificador_list -> IDENTIFICADOR .
-    (8) identificador_list -> IDENTIFICADOR . COMA identificador_list
+    (9) parameter_list -> declaration COMA . parameter_list
+    (8) parameter_list -> . declaration
+    (9) parameter_list -> . declaration COMA parameter_list
+    (10) parameter_list -> . empty
+    (23) declaration -> . TIPODATO IDENTIFICADOR PUNTOYCOMA
+    (24) declaration -> . TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA
+    (44) empty -> .
 
-    LPAREN          shift and go to state 30
-    IGUAL           shift and go to state 31
-    PUNTOYCOMA      reduce using rule 7 (identificador_list -> IDENTIFICADOR .)
-    COMA            shift and go to state 32
+    TIPODATO        shift and go to state 12
+    RPAREN          reduce using rule 44 (empty -> .)
 
+    declaration                    shift and go to state 14
+    parameter_list                 shift and go to state 23
+    empty                          shift and go to state 15
 
 state 19
 
-    (28) expression -> IDENTIFICADOR IGUAL . expression
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (23) declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .
 
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
+    COMA            reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    RPAREN          reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    TIPODATO        reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    PRINTF          reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    SCANF           reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    FOR             reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    IF              reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    ELSE            reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
+    RLLAVE          reduce using rule 23 (declaration -> TIPODATO IDENTIFICADOR PUNTOYCOMA .)
 
-    expression                     shift and go to state 33
 
 state 20
 
-    (1) statement -> FOR LPAREN for_init . PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
+    (24) declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ . NUMERO CORCHETEDER PUNTOYCOMA
 
-    PUNTOYCOMA      shift and go to state 34
+    NUMERO          shift and go to state 24
 
 
 state 21
 
-    (2) for_init -> declaration .
+    (7) function_definition -> TIPODATO IDENTIFICADOR LPAREN parameter_list RPAREN block .
 
-    PUNTOYCOMA      reduce using rule 2 (for_init -> declaration .)
+    TIPODATO        reduce using rule 7 (function_definition -> TIPODATO IDENTIFICADOR LPAREN parameter_list RPAREN block .)
+    $end            reduce using rule 7 (function_definition -> TIPODATO IDENTIFICADOR LPAREN parameter_list RPAREN block .)
 
 
 state 22
 
-    (3) for_init -> expression . PUNTOYCOMA
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (11) block -> LLLAVE . RLLAVE
+    (12) block -> LLLAVE . statement_list RLLAVE
+    (13) statement_list -> . statement
+    (14) statement_list -> . statement statement_list
+    (15) statement -> . declaration
+    (16) statement -> . assignment_statement
+    (17) statement -> . printf_statement
+    (18) statement -> . scanf_statement
+    (19) statement -> . for_statement
+    (20) statement -> . if_statement
+    (21) statement -> . else_statement
+    (22) statement -> . function_call
+    (23) declaration -> . TIPODATO IDENTIFICADOR PUNTOYCOMA
+    (24) declaration -> . TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA
+    (25) assignment_statement -> . IDENTIFICADOR IGUAL expression PUNTOYCOMA
+    (26) assignment_statement -> . IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA
+    (37) printf_statement -> . PRINTF LPAREN CADENA RPAREN PUNTOYCOMA
+    (38) printf_statement -> . PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA
+    (39) scanf_statement -> . SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA
+    (43) for_statement -> . FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block
+    (40) if_statement -> . IF LPAREN condition RPAREN block
+    (41) else_statement -> . ELSE block
+    (36) function_call -> . IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA
 
-    PUNTOYCOMA      shift and go to state 35
-    SUMA            shift and go to state 13
-    RESTA           shift and go to state 14
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
+    RLLAVE          shift and go to state 25
+    TIPODATO        shift and go to state 12
+    IDENTIFICADOR   shift and go to state 36
+    PRINTF          shift and go to state 37
+    SCANF           shift and go to state 38
+    FOR             shift and go to state 39
+    IF              shift and go to state 40
+    ELSE            shift and go to state 41
 
+    statement_list                 shift and go to state 26
+    statement                      shift and go to state 27
+    declaration                    shift and go to state 28
+    assignment_statement           shift and go to state 29
+    printf_statement               shift and go to state 30
+    scanf_statement                shift and go to state 31
+    for_statement                  shift and go to state 32
+    if_statement                   shift and go to state 33
+    else_statement                 shift and go to state 34
+    function_call                  shift and go to state 35
 
 state 23
 
-    (4) for_init -> empty .
+    (9) parameter_list -> declaration COMA parameter_list .
 
-    PUNTOYCOMA      reduce using rule 4 (for_init -> empty .)
+    RPAREN          reduce using rule 9 (parameter_list -> declaration COMA parameter_list .)
 
 
 state 24
 
-    (5) declaration -> TIPODATO . identificador_list PUNTOYCOMA
-    (6) identificador_list -> . IDENTIFICADOR IGUAL expression
-    (7) identificador_list -> . IDENTIFICADOR
-    (8) identificador_list -> . IDENTIFICADOR COMA identificador_list
+    (24) declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO . CORCHETEDER PUNTOYCOMA
 
-    IDENTIFICADOR   shift and go to state 36
+    CORCHETEDER     shift and go to state 42
 
-    identificador_list             shift and go to state 17
 
 state 25
 
-    (22) expression -> expression SUMA expression .
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (11) block -> LLLAVE RLLAVE .
 
-    PUNTOYCOMA      reduce using rule 22 (expression -> expression SUMA expression .)
-    SUMA            reduce using rule 22 (expression -> expression SUMA expression .)
-    RESTA           reduce using rule 22 (expression -> expression SUMA expression .)
-    COMPARADOR      reduce using rule 22 (expression -> expression SUMA expression .)
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
-
-  ! MULTI           [ reduce using rule 22 (expression -> expression SUMA expression .) ]
-  ! DIVIDE          [ reduce using rule 22 (expression -> expression SUMA expression .) ]
-  ! SUMA            [ shift and go to state 13 ]
-  ! RESTA           [ shift and go to state 14 ]
+    TIPODATO        reduce using rule 11 (block -> LLLAVE RLLAVE .)
+    $end            reduce using rule 11 (block -> LLLAVE RLLAVE .)
+    IDENTIFICADOR   reduce using rule 11 (block -> LLLAVE RLLAVE .)
+    PRINTF          reduce using rule 11 (block -> LLLAVE RLLAVE .)
+    SCANF           reduce using rule 11 (block -> LLLAVE RLLAVE .)
+    FOR             reduce using rule 11 (block -> LLLAVE RLLAVE .)
+    IF              reduce using rule 11 (block -> LLLAVE RLLAVE .)
+    ELSE            reduce using rule 11 (block -> LLLAVE RLLAVE .)
+    RLLAVE          reduce using rule 11 (block -> LLLAVE RLLAVE .)
 
 
 state 26
 
-    (23) expression -> expression RESTA expression .
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (12) block -> LLLAVE statement_list . RLLAVE
 
-    PUNTOYCOMA      reduce using rule 23 (expression -> expression RESTA expression .)
-    SUMA            reduce using rule 23 (expression -> expression RESTA expression .)
-    RESTA           reduce using rule 23 (expression -> expression RESTA expression .)
-    COMPARADOR      reduce using rule 23 (expression -> expression RESTA expression .)
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
-
-  ! MULTI           [ reduce using rule 23 (expression -> expression RESTA expression .) ]
-  ! DIVIDE          [ reduce using rule 23 (expression -> expression RESTA expression .) ]
-  ! SUMA            [ shift and go to state 13 ]
-  ! RESTA           [ shift and go to state 14 ]
+    RLLAVE          shift and go to state 43
 
 
 state 27
 
-    (24) expression -> expression MULTI expression .
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (13) statement_list -> statement .
+    (14) statement_list -> statement . statement_list
+    (13) statement_list -> . statement
+    (14) statement_list -> . statement statement_list
+    (15) statement -> . declaration
+    (16) statement -> . assignment_statement
+    (17) statement -> . printf_statement
+    (18) statement -> . scanf_statement
+    (19) statement -> . for_statement
+    (20) statement -> . if_statement
+    (21) statement -> . else_statement
+    (22) statement -> . function_call
+    (23) declaration -> . TIPODATO IDENTIFICADOR PUNTOYCOMA
+    (24) declaration -> . TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA
+    (25) assignment_statement -> . IDENTIFICADOR IGUAL expression PUNTOYCOMA
+    (26) assignment_statement -> . IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA
+    (37) printf_statement -> . PRINTF LPAREN CADENA RPAREN PUNTOYCOMA
+    (38) printf_statement -> . PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA
+    (39) scanf_statement -> . SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA
+    (43) for_statement -> . FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block
+    (40) if_statement -> . IF LPAREN condition RPAREN block
+    (41) else_statement -> . ELSE block
+    (36) function_call -> . IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA
 
-    PUNTOYCOMA      reduce using rule 24 (expression -> expression MULTI expression .)
-    SUMA            reduce using rule 24 (expression -> expression MULTI expression .)
-    RESTA           reduce using rule 24 (expression -> expression MULTI expression .)
-    MULTI           reduce using rule 24 (expression -> expression MULTI expression .)
-    DIVIDE          reduce using rule 24 (expression -> expression MULTI expression .)
-    COMPARADOR      reduce using rule 24 (expression -> expression MULTI expression .)
+    RLLAVE          reduce using rule 13 (statement_list -> statement .)
+    TIPODATO        shift and go to state 12
+    IDENTIFICADOR   shift and go to state 36
+    PRINTF          shift and go to state 37
+    SCANF           shift and go to state 38
+    FOR             shift and go to state 39
+    IF              shift and go to state 40
+    ELSE            shift and go to state 41
 
-  ! SUMA            [ shift and go to state 13 ]
-  ! RESTA           [ shift and go to state 14 ]
-  ! MULTI           [ shift and go to state 15 ]
-  ! DIVIDE          [ shift and go to state 16 ]
-
+    statement                      shift and go to state 27
+    statement_list                 shift and go to state 44
+    declaration                    shift and go to state 28
+    assignment_statement           shift and go to state 29
+    printf_statement               shift and go to state 30
+    scanf_statement                shift and go to state 31
+    for_statement                  shift and go to state 32
+    if_statement                   shift and go to state 33
+    else_statement                 shift and go to state 34
+    function_call                  shift and go to state 35
 
 state 28
 
-    (25) expression -> expression DIVIDE expression .
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (15) statement -> declaration .
 
-    PUNTOYCOMA      reduce using rule 25 (expression -> expression DIVIDE expression .)
-    SUMA            reduce using rule 25 (expression -> expression DIVIDE expression .)
-    RESTA           reduce using rule 25 (expression -> expression DIVIDE expression .)
-    MULTI           reduce using rule 25 (expression -> expression DIVIDE expression .)
-    DIVIDE          reduce using rule 25 (expression -> expression DIVIDE expression .)
-    COMPARADOR      reduce using rule 25 (expression -> expression DIVIDE expression .)
-
-  ! SUMA            [ shift and go to state 13 ]
-  ! RESTA           [ shift and go to state 14 ]
-  ! MULTI           [ shift and go to state 15 ]
-  ! DIVIDE          [ shift and go to state 16 ]
+    TIPODATO        reduce using rule 15 (statement -> declaration .)
+    IDENTIFICADOR   reduce using rule 15 (statement -> declaration .)
+    PRINTF          reduce using rule 15 (statement -> declaration .)
+    SCANF           reduce using rule 15 (statement -> declaration .)
+    FOR             reduce using rule 15 (statement -> declaration .)
+    IF              reduce using rule 15 (statement -> declaration .)
+    ELSE            reduce using rule 15 (statement -> declaration .)
+    RLLAVE          reduce using rule 15 (statement -> declaration .)
 
 
 state 29
 
-    (5) declaration -> TIPODATO identificador_list PUNTOYCOMA .
+    (16) statement -> assignment_statement .
 
-    $end            reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
-    PUNTOYCOMA      reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
-    FOR             reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
-    TIPODATO        reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
-    NUMERO          reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
-    IDENTIFICADOR   reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
-    INCLUDE         reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
-    RLLAVE          reduce using rule 5 (declaration -> TIPODATO identificador_list PUNTOYCOMA .)
+    TIPODATO        reduce using rule 16 (statement -> assignment_statement .)
+    IDENTIFICADOR   reduce using rule 16 (statement -> assignment_statement .)
+    PRINTF          reduce using rule 16 (statement -> assignment_statement .)
+    SCANF           reduce using rule 16 (statement -> assignment_statement .)
+    FOR             reduce using rule 16 (statement -> assignment_statement .)
+    IF              reduce using rule 16 (statement -> assignment_statement .)
+    ELSE            reduce using rule 16 (statement -> assignment_statement .)
+    RLLAVE          reduce using rule 16 (statement -> assignment_statement .)
 
 
 state 30
 
-    (13) function_definition -> TIPODATO IDENTIFICADOR LPAREN . RPAREN block
+    (17) statement -> printf_statement .
 
-    RPAREN          shift and go to state 37
+    TIPODATO        reduce using rule 17 (statement -> printf_statement .)
+    IDENTIFICADOR   reduce using rule 17 (statement -> printf_statement .)
+    PRINTF          reduce using rule 17 (statement -> printf_statement .)
+    SCANF           reduce using rule 17 (statement -> printf_statement .)
+    FOR             reduce using rule 17 (statement -> printf_statement .)
+    IF              reduce using rule 17 (statement -> printf_statement .)
+    ELSE            reduce using rule 17 (statement -> printf_statement .)
+    RLLAVE          reduce using rule 17 (statement -> printf_statement .)
 
 
 state 31
 
-    (6) identificador_list -> IDENTIFICADOR IGUAL . expression
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (18) statement -> scanf_statement .
 
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
+    TIPODATO        reduce using rule 18 (statement -> scanf_statement .)
+    IDENTIFICADOR   reduce using rule 18 (statement -> scanf_statement .)
+    PRINTF          reduce using rule 18 (statement -> scanf_statement .)
+    SCANF           reduce using rule 18 (statement -> scanf_statement .)
+    FOR             reduce using rule 18 (statement -> scanf_statement .)
+    IF              reduce using rule 18 (statement -> scanf_statement .)
+    ELSE            reduce using rule 18 (statement -> scanf_statement .)
+    RLLAVE          reduce using rule 18 (statement -> scanf_statement .)
 
-    expression                     shift and go to state 38
 
 state 32
 
-    (8) identificador_list -> IDENTIFICADOR COMA . identificador_list
-    (6) identificador_list -> . IDENTIFICADOR IGUAL expression
-    (7) identificador_list -> . IDENTIFICADOR
-    (8) identificador_list -> . IDENTIFICADOR COMA identificador_list
+    (19) statement -> for_statement .
 
-    IDENTIFICADOR   shift and go to state 36
+    TIPODATO        reduce using rule 19 (statement -> for_statement .)
+    IDENTIFICADOR   reduce using rule 19 (statement -> for_statement .)
+    PRINTF          reduce using rule 19 (statement -> for_statement .)
+    SCANF           reduce using rule 19 (statement -> for_statement .)
+    FOR             reduce using rule 19 (statement -> for_statement .)
+    IF              reduce using rule 19 (statement -> for_statement .)
+    ELSE            reduce using rule 19 (statement -> for_statement .)
+    RLLAVE          reduce using rule 19 (statement -> for_statement .)
 
-    identificador_list             shift and go to state 39
 
 state 33
 
-    (28) expression -> IDENTIFICADOR IGUAL expression .
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (20) statement -> if_statement .
 
-  ! shift/reduce conflict for SUMA resolved as shift
-  ! shift/reduce conflict for RESTA resolved as shift
-  ! shift/reduce conflict for MULTI resolved as shift
-  ! shift/reduce conflict for DIVIDE resolved as shift
-    PUNTOYCOMA      reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .)
-    COMPARADOR      reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .)
-    SUMA            shift and go to state 13
-    RESTA           shift and go to state 14
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
-
-  ! SUMA            [ reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .) ]
-  ! RESTA           [ reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .) ]
-  ! MULTI           [ reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .) ]
-  ! DIVIDE          [ reduce using rule 28 (expression -> IDENTIFICADOR IGUAL expression .) ]
+    TIPODATO        reduce using rule 20 (statement -> if_statement .)
+    IDENTIFICADOR   reduce using rule 20 (statement -> if_statement .)
+    PRINTF          reduce using rule 20 (statement -> if_statement .)
+    SCANF           reduce using rule 20 (statement -> if_statement .)
+    FOR             reduce using rule 20 (statement -> if_statement .)
+    IF              reduce using rule 20 (statement -> if_statement .)
+    ELSE            reduce using rule 20 (statement -> if_statement .)
+    RLLAVE          reduce using rule 20 (statement -> if_statement .)
 
 
 state 34
 
-    (1) statement -> FOR LPAREN for_init PUNTOYCOMA . condition PUNTOYCOMA for_update RPAREN block
-    (9) condition -> . expression COMPARADOR expression
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (21) statement -> else_statement .
 
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
+    TIPODATO        reduce using rule 21 (statement -> else_statement .)
+    IDENTIFICADOR   reduce using rule 21 (statement -> else_statement .)
+    PRINTF          reduce using rule 21 (statement -> else_statement .)
+    SCANF           reduce using rule 21 (statement -> else_statement .)
+    FOR             reduce using rule 21 (statement -> else_statement .)
+    IF              reduce using rule 21 (statement -> else_statement .)
+    ELSE            reduce using rule 21 (statement -> else_statement .)
+    RLLAVE          reduce using rule 21 (statement -> else_statement .)
 
-    condition                      shift and go to state 40
-    expression                     shift and go to state 41
 
 state 35
 
-    (3) for_init -> expression PUNTOYCOMA .
+    (22) statement -> function_call .
 
-    PUNTOYCOMA      reduce using rule 3 (for_init -> expression PUNTOYCOMA .)
+    TIPODATO        reduce using rule 22 (statement -> function_call .)
+    IDENTIFICADOR   reduce using rule 22 (statement -> function_call .)
+    PRINTF          reduce using rule 22 (statement -> function_call .)
+    SCANF           reduce using rule 22 (statement -> function_call .)
+    FOR             reduce using rule 22 (statement -> function_call .)
+    IF              reduce using rule 22 (statement -> function_call .)
+    ELSE            reduce using rule 22 (statement -> function_call .)
+    RLLAVE          reduce using rule 22 (statement -> function_call .)
 
 
 state 36
 
-    (6) identificador_list -> IDENTIFICADOR . IGUAL expression
-    (7) identificador_list -> IDENTIFICADOR .
-    (8) identificador_list -> IDENTIFICADOR . COMA identificador_list
+    (25) assignment_statement -> IDENTIFICADOR . IGUAL expression PUNTOYCOMA
+    (26) assignment_statement -> IDENTIFICADOR . CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA
+    (36) function_call -> IDENTIFICADOR . LPAREN RPAREN PUNTOYCOMA
 
-    IGUAL           shift and go to state 31
-    PUNTOYCOMA      reduce using rule 7 (identificador_list -> IDENTIFICADOR .)
-    COMA            shift and go to state 32
+    IGUAL           shift and go to state 45
+    CORCHETEIZQ     shift and go to state 46
+    LPAREN          shift and go to state 47
 
 
 state 37
 
-    (13) function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN . block
-    (14) block -> . LLLAVE RLLAVE
-    (15) block -> . LLLAVE statement_list RLLAVE
+    (37) printf_statement -> PRINTF . LPAREN CADENA RPAREN PUNTOYCOMA
+    (38) printf_statement -> PRINTF . LPAREN CADENA COMA expression RPAREN PUNTOYCOMA
 
-    LLLAVE          shift and go to state 43
+    LPAREN          shift and go to state 48
 
-    block                          shift and go to state 42
 
 state 38
 
-    (6) identificador_list -> IDENTIFICADOR IGUAL expression .
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (39) scanf_statement -> SCANF . LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA
 
-    PUNTOYCOMA      reduce using rule 6 (identificador_list -> IDENTIFICADOR IGUAL expression .)
-    SUMA            shift and go to state 13
-    RESTA           shift and go to state 14
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
+    LPAREN          shift and go to state 49
 
 
 state 39
 
-    (8) identificador_list -> IDENTIFICADOR COMA identificador_list .
+    (43) for_statement -> FOR . LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block
 
-    PUNTOYCOMA      reduce using rule 8 (identificador_list -> IDENTIFICADOR COMA identificador_list .)
+    LPAREN          shift and go to state 50
 
 
 state 40
 
-    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition . PUNTOYCOMA for_update RPAREN block
+    (40) if_statement -> IF . LPAREN condition RPAREN block
 
-    PUNTOYCOMA      shift and go to state 44
+    LPAREN          shift and go to state 51
 
 
 state 41
 
-    (9) condition -> expression . COMPARADOR expression
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (41) else_statement -> ELSE . block
+    (11) block -> . LLLAVE RLLAVE
+    (12) block -> . LLLAVE statement_list RLLAVE
 
-    COMPARADOR      shift and go to state 45
-    SUMA            shift and go to state 13
-    RESTA           shift and go to state 14
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
+    LLLAVE          shift and go to state 22
 
+    block                          shift and go to state 52
 
 state 42
 
-    (13) function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .
+    (24) declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER . PUNTOYCOMA
 
-    $end            reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
-    FOR             reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
-    TIPODATO        reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
-    NUMERO          reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
-    IDENTIFICADOR   reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
-    INCLUDE         reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
-    RLLAVE          reduce using rule 13 (function_definition -> TIPODATO IDENTIFICADOR LPAREN RPAREN block .)
+    PUNTOYCOMA      shift and go to state 53
 
 
 state 43
 
-    (14) block -> LLLAVE . RLLAVE
-    (15) block -> LLLAVE . statement_list RLLAVE
-    (16) statement_list -> . statement
-    (17) statement_list -> . statement statement_list
-    (1) statement -> . FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
-    (18) statement -> . declaration
-    (19) statement -> . expression PUNTOYCOMA
-    (20) statement -> . preprocessor_directive
-    (21) statement -> . function_definition
-    (5) declaration -> . TIPODATO identificador_list PUNTOYCOMA
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
-    (12) preprocessor_directive -> . INCLUDE
-    (13) function_definition -> . TIPODATO IDENTIFICADOR LPAREN RPAREN block
+    (12) block -> LLLAVE statement_list RLLAVE .
 
-    RLLAVE          shift and go to state 46
-    FOR             shift and go to state 2
-    TIPODATO        shift and go to state 7
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
-    INCLUDE         shift and go to state 10
+    TIPODATO        reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
+    $end            reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
+    IDENTIFICADOR   reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
+    PRINTF          reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
+    SCANF           reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
+    FOR             reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
+    IF              reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
+    ELSE            reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
+    RLLAVE          reduce using rule 12 (block -> LLLAVE statement_list RLLAVE .)
 
-    statement_list                 shift and go to state 47
-    statement                      shift and go to state 48
-    declaration                    shift and go to state 3
-    expression                     shift and go to state 4
-    preprocessor_directive         shift and go to state 5
-    function_definition            shift and go to state 6
 
 state 44
 
-    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA . for_update RPAREN block
-    (10) for_update -> . IDENTIFICADOR SUMA SUMA
-    (11) for_update -> . IDENTIFICADOR RESTA RESTA
+    (14) statement_list -> statement statement_list .
 
-    IDENTIFICADOR   shift and go to state 50
+    RLLAVE          reduce using rule 14 (statement_list -> statement statement_list .)
 
-    for_update                     shift and go to state 49
 
 state 45
 
-    (9) condition -> expression COMPARADOR . expression
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
+    (25) assignment_statement -> IDENTIFICADOR IGUAL . expression PUNTOYCOMA
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
 
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
 
-    expression                     shift and go to state 51
+    expression                     shift and go to state 55
 
 state 46
 
-    (14) block -> LLLAVE RLLAVE .
+    (26) assignment_statement -> IDENTIFICADOR CORCHETEIZQ . expression CORCHETEDER IGUAL expression PUNTOYCOMA
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
 
-    $end            reduce using rule 14 (block -> LLLAVE RLLAVE .)
-    FOR             reduce using rule 14 (block -> LLLAVE RLLAVE .)
-    TIPODATO        reduce using rule 14 (block -> LLLAVE RLLAVE .)
-    NUMERO          reduce using rule 14 (block -> LLLAVE RLLAVE .)
-    IDENTIFICADOR   reduce using rule 14 (block -> LLLAVE RLLAVE .)
-    INCLUDE         reduce using rule 14 (block -> LLLAVE RLLAVE .)
-    RLLAVE          reduce using rule 14 (block -> LLLAVE RLLAVE .)
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
 
+    expression                     shift and go to state 60
 
 state 47
 
-    (15) block -> LLLAVE statement_list . RLLAVE
+    (36) function_call -> IDENTIFICADOR LPAREN . RPAREN PUNTOYCOMA
 
-    RLLAVE          shift and go to state 52
+    RPAREN          shift and go to state 61
 
 
 state 48
 
-    (16) statement_list -> statement .
-    (17) statement_list -> statement . statement_list
-    (16) statement_list -> . statement
-    (17) statement_list -> . statement statement_list
-    (1) statement -> . FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block
-    (18) statement -> . declaration
-    (19) statement -> . expression PUNTOYCOMA
-    (20) statement -> . preprocessor_directive
-    (21) statement -> . function_definition
-    (5) declaration -> . TIPODATO identificador_list PUNTOYCOMA
-    (22) expression -> . expression SUMA expression
-    (23) expression -> . expression RESTA expression
-    (24) expression -> . expression MULTI expression
-    (25) expression -> . expression DIVIDE expression
-    (26) expression -> . NUMERO
-    (27) expression -> . IDENTIFICADOR
-    (28) expression -> . IDENTIFICADOR IGUAL expression
-    (12) preprocessor_directive -> . INCLUDE
-    (13) function_definition -> . TIPODATO IDENTIFICADOR LPAREN RPAREN block
+    (37) printf_statement -> PRINTF LPAREN . CADENA RPAREN PUNTOYCOMA
+    (38) printf_statement -> PRINTF LPAREN . CADENA COMA expression RPAREN PUNTOYCOMA
 
-    RLLAVE          reduce using rule 16 (statement_list -> statement .)
-    FOR             shift and go to state 2
-    TIPODATO        shift and go to state 7
-    NUMERO          shift and go to state 8
-    IDENTIFICADOR   shift and go to state 9
-    INCLUDE         shift and go to state 10
+    CADENA          shift and go to state 62
 
-    statement                      shift and go to state 48
-    statement_list                 shift and go to state 53
-    declaration                    shift and go to state 3
-    expression                     shift and go to state 4
-    preprocessor_directive         shift and go to state 5
-    function_definition            shift and go to state 6
 
 state 49
 
-    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update . RPAREN block
+    (39) scanf_statement -> SCANF LPAREN . CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA
 
-    RPAREN          shift and go to state 54
+    CADENA          shift and go to state 63
 
 
 state 50
 
-    (10) for_update -> IDENTIFICADOR . SUMA SUMA
-    (11) for_update -> IDENTIFICADOR . RESTA RESTA
+    (43) for_statement -> FOR LPAREN . assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block
+    (25) assignment_statement -> . IDENTIFICADOR IGUAL expression PUNTOYCOMA
+    (26) assignment_statement -> . IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA
 
-    SUMA            shift and go to state 55
-    RESTA           shift and go to state 56
+    IDENTIFICADOR   shift and go to state 65
 
+    assignment_statement           shift and go to state 64
 
 state 51
 
-    (9) condition -> expression COMPARADOR expression .
-    (22) expression -> expression . SUMA expression
-    (23) expression -> expression . RESTA expression
-    (24) expression -> expression . MULTI expression
-    (25) expression -> expression . DIVIDE expression
+    (40) if_statement -> IF LPAREN . condition RPAREN block
+    (42) condition -> . expression COMPARADOR expression
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
 
-    PUNTOYCOMA      reduce using rule 9 (condition -> expression COMPARADOR expression .)
-    SUMA            shift and go to state 13
-    RESTA           shift and go to state 14
-    MULTI           shift and go to state 15
-    DIVIDE          shift and go to state 16
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
 
+    condition                      shift and go to state 66
+    expression                     shift and go to state 67
 
 state 52
 
-    (15) block -> LLLAVE statement_list RLLAVE .
+    (41) else_statement -> ELSE block .
 
-    $end            reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
-    FOR             reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
-    TIPODATO        reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
-    NUMERO          reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
-    IDENTIFICADOR   reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
-    INCLUDE         reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
-    RLLAVE          reduce using rule 15 (block -> LLLAVE statement_list RLLAVE .)
+    TIPODATO        reduce using rule 41 (else_statement -> ELSE block .)
+    IDENTIFICADOR   reduce using rule 41 (else_statement -> ELSE block .)
+    PRINTF          reduce using rule 41 (else_statement -> ELSE block .)
+    SCANF           reduce using rule 41 (else_statement -> ELSE block .)
+    FOR             reduce using rule 41 (else_statement -> ELSE block .)
+    IF              reduce using rule 41 (else_statement -> ELSE block .)
+    ELSE            reduce using rule 41 (else_statement -> ELSE block .)
+    RLLAVE          reduce using rule 41 (else_statement -> ELSE block .)
 
 
 state 53
 
-    (17) statement_list -> statement statement_list .
+    (24) declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .
 
-    RLLAVE          reduce using rule 17 (statement_list -> statement statement_list .)
+    COMA            reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    RPAREN          reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    TIPODATO        reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    PRINTF          reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    SCANF           reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    FOR             reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    IF              reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    ELSE            reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
+    RLLAVE          reduce using rule 24 (declaration -> TIPODATO IDENTIFICADOR CORCHETEIZQ NUMERO CORCHETEDER PUNTOYCOMA .)
 
 
 state 54
 
-    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN . block
-    (14) block -> . LLLAVE RLLAVE
-    (15) block -> . LLLAVE statement_list RLLAVE
+    (32) expression -> IDENTIFICADOR .
 
-    LLLAVE          shift and go to state 43
+    PUNTOYCOMA      reduce using rule 32 (expression -> IDENTIFICADOR .)
+    SUMA            reduce using rule 32 (expression -> IDENTIFICADOR .)
+    RESTA           reduce using rule 32 (expression -> IDENTIFICADOR .)
+    MULTI           reduce using rule 32 (expression -> IDENTIFICADOR .)
+    DIVIDE          reduce using rule 32 (expression -> IDENTIFICADOR .)
+    CORCHETEDER     reduce using rule 32 (expression -> IDENTIFICADOR .)
+    COMPARADOR      reduce using rule 32 (expression -> IDENTIFICADOR .)
+    RPAREN          reduce using rule 32 (expression -> IDENTIFICADOR .)
 
-    block                          shift and go to state 57
 
 state 55
 
-    (10) for_update -> IDENTIFICADOR SUMA . SUMA
+    (25) assignment_statement -> IDENTIFICADOR IGUAL expression . PUNTOYCOMA
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
 
-    SUMA            shift and go to state 58
+    PUNTOYCOMA      shift and go to state 68
+    SUMA            shift and go to state 69
+    RESTA           shift and go to state 70
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
 
 
 state 56
 
-    (11) for_update -> IDENTIFICADOR RESTA . RESTA
+    (31) expression -> NUMERO .
 
-    RESTA           shift and go to state 59
+    PUNTOYCOMA      reduce using rule 31 (expression -> NUMERO .)
+    SUMA            reduce using rule 31 (expression -> NUMERO .)
+    RESTA           reduce using rule 31 (expression -> NUMERO .)
+    MULTI           reduce using rule 31 (expression -> NUMERO .)
+    DIVIDE          reduce using rule 31 (expression -> NUMERO .)
+    CORCHETEDER     reduce using rule 31 (expression -> NUMERO .)
+    COMPARADOR      reduce using rule 31 (expression -> NUMERO .)
+    RPAREN          reduce using rule 31 (expression -> NUMERO .)
 
 
 state 57
 
-    (1) statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .
+    (33) expression -> CADENA .
 
-    $end            reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
-    FOR             reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
-    TIPODATO        reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
-    NUMERO          reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
-    IDENTIFICADOR   reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
-    INCLUDE         reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
-    RLLAVE          reduce using rule 1 (statement -> FOR LPAREN for_init PUNTOYCOMA condition PUNTOYCOMA for_update RPAREN block .)
+    PUNTOYCOMA      reduce using rule 33 (expression -> CADENA .)
+    SUMA            reduce using rule 33 (expression -> CADENA .)
+    RESTA           reduce using rule 33 (expression -> CADENA .)
+    MULTI           reduce using rule 33 (expression -> CADENA .)
+    DIVIDE          reduce using rule 33 (expression -> CADENA .)
+    CORCHETEDER     reduce using rule 33 (expression -> CADENA .)
+    COMPARADOR      reduce using rule 33 (expression -> CADENA .)
+    RPAREN          reduce using rule 33 (expression -> CADENA .)
 
 
 state 58
 
-    (10) for_update -> IDENTIFICADOR SUMA SUMA .
+    (34) expression -> CARACTER .
 
-    RPAREN          reduce using rule 10 (for_update -> IDENTIFICADOR SUMA SUMA .)
+    PUNTOYCOMA      reduce using rule 34 (expression -> CARACTER .)
+    SUMA            reduce using rule 34 (expression -> CARACTER .)
+    RESTA           reduce using rule 34 (expression -> CARACTER .)
+    MULTI           reduce using rule 34 (expression -> CARACTER .)
+    DIVIDE          reduce using rule 34 (expression -> CARACTER .)
+    CORCHETEDER     reduce using rule 34 (expression -> CARACTER .)
+    COMPARADOR      reduce using rule 34 (expression -> CARACTER .)
+    RPAREN          reduce using rule 34 (expression -> CARACTER .)
 
 
 state 59
 
-    (11) for_update -> IDENTIFICADOR RESTA RESTA .
+    (35) expression -> LPAREN . expression RPAREN
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
 
-    RPAREN          reduce using rule 11 (for_update -> IDENTIFICADOR RESTA RESTA .)
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
 
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for SUMA in state 33 resolved as shift
-WARNING: shift/reduce conflict for RESTA in state 33 resolved as shift
-WARNING: shift/reduce conflict for MULTI in state 33 resolved as shift
-WARNING: shift/reduce conflict for DIVIDE in state 33 resolved as shift
+    expression                     shift and go to state 73
+
+state 60
+
+    (26) assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression . CORCHETEDER IGUAL expression PUNTOYCOMA
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    CORCHETEDER     shift and go to state 74
+    SUMA            shift and go to state 69
+    RESTA           shift and go to state 70
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
+
+
+state 61
+
+    (36) function_call -> IDENTIFICADOR LPAREN RPAREN . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 75
+
+
+state 62
+
+    (37) printf_statement -> PRINTF LPAREN CADENA . RPAREN PUNTOYCOMA
+    (38) printf_statement -> PRINTF LPAREN CADENA . COMA expression RPAREN PUNTOYCOMA
+
+    RPAREN          shift and go to state 76
+    COMA            shift and go to state 77
+
+
+state 63
+
+    (39) scanf_statement -> SCANF LPAREN CADENA . COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA
+
+    COMA            shift and go to state 78
+
+
+state 64
+
+    (43) for_statement -> FOR LPAREN assignment_statement . PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block
+
+    PUNTOYCOMA      shift and go to state 79
+
+
+state 65
+
+    (25) assignment_statement -> IDENTIFICADOR . IGUAL expression PUNTOYCOMA
+    (26) assignment_statement -> IDENTIFICADOR . CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA
+
+    IGUAL           shift and go to state 45
+    CORCHETEIZQ     shift and go to state 46
+
+
+state 66
+
+    (40) if_statement -> IF LPAREN condition . RPAREN block
+
+    RPAREN          shift and go to state 80
+
+
+state 67
+
+    (42) condition -> expression . COMPARADOR expression
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    COMPARADOR      shift and go to state 81
+    SUMA            shift and go to state 69
+    RESTA           shift and go to state 70
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
+
+
+state 68
+
+    (25) assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .
+
+    TIPODATO        reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    PRINTF          reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    SCANF           reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    FOR             reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    IF              reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    ELSE            reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    RLLAVE          reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    PUNTOYCOMA      reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+    RPAREN          reduce using rule 25 (assignment_statement -> IDENTIFICADOR IGUAL expression PUNTOYCOMA .)
+
+
+state 69
+
+    (27) expression -> expression SUMA . expression
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
+
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
+
+    expression                     shift and go to state 82
+
+state 70
+
+    (28) expression -> expression RESTA . expression
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
+
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
+
+    expression                     shift and go to state 83
+
+state 71
+
+    (29) expression -> expression MULTI . expression
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
+
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
+
+    expression                     shift and go to state 84
+
+state 72
+
+    (30) expression -> expression DIVIDE . expression
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
+
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
+
+    expression                     shift and go to state 85
+
+state 73
+
+    (35) expression -> LPAREN expression . RPAREN
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 86
+    SUMA            shift and go to state 69
+    RESTA           shift and go to state 70
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
+
+
+state 74
+
+    (26) assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER . IGUAL expression PUNTOYCOMA
+
+    IGUAL           shift and go to state 87
+
+
+state 75
+
+    (36) function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .
+
+    TIPODATO        reduce using rule 36 (function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 36 (function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .)
+    PRINTF          reduce using rule 36 (function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .)
+    SCANF           reduce using rule 36 (function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .)
+    FOR             reduce using rule 36 (function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .)
+    IF              reduce using rule 36 (function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .)
+    ELSE            reduce using rule 36 (function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .)
+    RLLAVE          reduce using rule 36 (function_call -> IDENTIFICADOR LPAREN RPAREN PUNTOYCOMA .)
+
+
+state 76
+
+    (37) printf_statement -> PRINTF LPAREN CADENA RPAREN . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 88
+
+
+state 77
+
+    (38) printf_statement -> PRINTF LPAREN CADENA COMA . expression RPAREN PUNTOYCOMA
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
+
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
+
+    expression                     shift and go to state 89
+
+state 78
+
+    (39) scanf_statement -> SCANF LPAREN CADENA COMA . AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA
+
+    AMPERSAND       shift and go to state 90
+
+
+state 79
+
+    (43) for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA . condition PUNTOYCOMA assignment_statement RPAREN block
+    (42) condition -> . expression COMPARADOR expression
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
+
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
+
+    condition                      shift and go to state 91
+    expression                     shift and go to state 67
+
+state 80
+
+    (40) if_statement -> IF LPAREN condition RPAREN . block
+    (11) block -> . LLLAVE RLLAVE
+    (12) block -> . LLLAVE statement_list RLLAVE
+
+    LLLAVE          shift and go to state 22
+
+    block                          shift and go to state 92
+
+state 81
+
+    (42) condition -> expression COMPARADOR . expression
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
+
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
+
+    expression                     shift and go to state 93
+
+state 82
+
+    (27) expression -> expression SUMA expression .
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 27 (expression -> expression SUMA expression .)
+    SUMA            reduce using rule 27 (expression -> expression SUMA expression .)
+    RESTA           reduce using rule 27 (expression -> expression SUMA expression .)
+    CORCHETEDER     reduce using rule 27 (expression -> expression SUMA expression .)
+    COMPARADOR      reduce using rule 27 (expression -> expression SUMA expression .)
+    RPAREN          reduce using rule 27 (expression -> expression SUMA expression .)
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
+
+  ! MULTI           [ reduce using rule 27 (expression -> expression SUMA expression .) ]
+  ! DIVIDE          [ reduce using rule 27 (expression -> expression SUMA expression .) ]
+  ! SUMA            [ shift and go to state 69 ]
+  ! RESTA           [ shift and go to state 70 ]
+
+
+state 83
+
+    (28) expression -> expression RESTA expression .
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 28 (expression -> expression RESTA expression .)
+    SUMA            reduce using rule 28 (expression -> expression RESTA expression .)
+    RESTA           reduce using rule 28 (expression -> expression RESTA expression .)
+    CORCHETEDER     reduce using rule 28 (expression -> expression RESTA expression .)
+    COMPARADOR      reduce using rule 28 (expression -> expression RESTA expression .)
+    RPAREN          reduce using rule 28 (expression -> expression RESTA expression .)
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
+
+  ! MULTI           [ reduce using rule 28 (expression -> expression RESTA expression .) ]
+  ! DIVIDE          [ reduce using rule 28 (expression -> expression RESTA expression .) ]
+  ! SUMA            [ shift and go to state 69 ]
+  ! RESTA           [ shift and go to state 70 ]
+
+
+state 84
+
+    (29) expression -> expression MULTI expression .
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 29 (expression -> expression MULTI expression .)
+    SUMA            reduce using rule 29 (expression -> expression MULTI expression .)
+    RESTA           reduce using rule 29 (expression -> expression MULTI expression .)
+    MULTI           reduce using rule 29 (expression -> expression MULTI expression .)
+    DIVIDE          reduce using rule 29 (expression -> expression MULTI expression .)
+    CORCHETEDER     reduce using rule 29 (expression -> expression MULTI expression .)
+    COMPARADOR      reduce using rule 29 (expression -> expression MULTI expression .)
+    RPAREN          reduce using rule 29 (expression -> expression MULTI expression .)
+
+  ! SUMA            [ shift and go to state 69 ]
+  ! RESTA           [ shift and go to state 70 ]
+  ! MULTI           [ shift and go to state 71 ]
+  ! DIVIDE          [ shift and go to state 72 ]
+
+
+state 85
+
+    (30) expression -> expression DIVIDE expression .
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      reduce using rule 30 (expression -> expression DIVIDE expression .)
+    SUMA            reduce using rule 30 (expression -> expression DIVIDE expression .)
+    RESTA           reduce using rule 30 (expression -> expression DIVIDE expression .)
+    MULTI           reduce using rule 30 (expression -> expression DIVIDE expression .)
+    DIVIDE          reduce using rule 30 (expression -> expression DIVIDE expression .)
+    CORCHETEDER     reduce using rule 30 (expression -> expression DIVIDE expression .)
+    COMPARADOR      reduce using rule 30 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 30 (expression -> expression DIVIDE expression .)
+
+  ! SUMA            [ shift and go to state 69 ]
+  ! RESTA           [ shift and go to state 70 ]
+  ! MULTI           [ shift and go to state 71 ]
+  ! DIVIDE          [ shift and go to state 72 ]
+
+
+state 86
+
+    (35) expression -> LPAREN expression RPAREN .
+
+    PUNTOYCOMA      reduce using rule 35 (expression -> LPAREN expression RPAREN .)
+    SUMA            reduce using rule 35 (expression -> LPAREN expression RPAREN .)
+    RESTA           reduce using rule 35 (expression -> LPAREN expression RPAREN .)
+    MULTI           reduce using rule 35 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 35 (expression -> LPAREN expression RPAREN .)
+    CORCHETEDER     reduce using rule 35 (expression -> LPAREN expression RPAREN .)
+    COMPARADOR      reduce using rule 35 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 35 (expression -> LPAREN expression RPAREN .)
+
+
+state 87
+
+    (26) assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL . expression PUNTOYCOMA
+    (27) expression -> . expression SUMA expression
+    (28) expression -> . expression RESTA expression
+    (29) expression -> . expression MULTI expression
+    (30) expression -> . expression DIVIDE expression
+    (31) expression -> . NUMERO
+    (32) expression -> . IDENTIFICADOR
+    (33) expression -> . CADENA
+    (34) expression -> . CARACTER
+    (35) expression -> . LPAREN expression RPAREN
+
+    NUMERO          shift and go to state 56
+    IDENTIFICADOR   shift and go to state 54
+    CADENA          shift and go to state 57
+    CARACTER        shift and go to state 58
+    LPAREN          shift and go to state 59
+
+    expression                     shift and go to state 94
+
+state 88
+
+    (37) printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .
+
+    TIPODATO        reduce using rule 37 (printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 37 (printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .)
+    PRINTF          reduce using rule 37 (printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .)
+    SCANF           reduce using rule 37 (printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .)
+    FOR             reduce using rule 37 (printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .)
+    IF              reduce using rule 37 (printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .)
+    ELSE            reduce using rule 37 (printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .)
+    RLLAVE          reduce using rule 37 (printf_statement -> PRINTF LPAREN CADENA RPAREN PUNTOYCOMA .)
+
+
+state 89
+
+    (38) printf_statement -> PRINTF LPAREN CADENA COMA expression . RPAREN PUNTOYCOMA
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 95
+    SUMA            shift and go to state 69
+    RESTA           shift and go to state 70
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
+
+
+state 90
+
+    (39) scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND . IDENTIFICADOR RPAREN PUNTOYCOMA
+
+    IDENTIFICADOR   shift and go to state 96
+
+
+state 91
+
+    (43) for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition . PUNTOYCOMA assignment_statement RPAREN block
+
+    PUNTOYCOMA      shift and go to state 97
+
+
+state 92
+
+    (40) if_statement -> IF LPAREN condition RPAREN block .
+
+    TIPODATO        reduce using rule 40 (if_statement -> IF LPAREN condition RPAREN block .)
+    IDENTIFICADOR   reduce using rule 40 (if_statement -> IF LPAREN condition RPAREN block .)
+    PRINTF          reduce using rule 40 (if_statement -> IF LPAREN condition RPAREN block .)
+    SCANF           reduce using rule 40 (if_statement -> IF LPAREN condition RPAREN block .)
+    FOR             reduce using rule 40 (if_statement -> IF LPAREN condition RPAREN block .)
+    IF              reduce using rule 40 (if_statement -> IF LPAREN condition RPAREN block .)
+    ELSE            reduce using rule 40 (if_statement -> IF LPAREN condition RPAREN block .)
+    RLLAVE          reduce using rule 40 (if_statement -> IF LPAREN condition RPAREN block .)
+
+
+state 93
+
+    (42) condition -> expression COMPARADOR expression .
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    RPAREN          reduce using rule 42 (condition -> expression COMPARADOR expression .)
+    PUNTOYCOMA      reduce using rule 42 (condition -> expression COMPARADOR expression .)
+    SUMA            shift and go to state 69
+    RESTA           shift and go to state 70
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
+
+
+state 94
+
+    (26) assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression . PUNTOYCOMA
+    (27) expression -> expression . SUMA expression
+    (28) expression -> expression . RESTA expression
+    (29) expression -> expression . MULTI expression
+    (30) expression -> expression . DIVIDE expression
+
+    PUNTOYCOMA      shift and go to state 98
+    SUMA            shift and go to state 69
+    RESTA           shift and go to state 70
+    MULTI           shift and go to state 71
+    DIVIDE          shift and go to state 72
+
+
+state 95
+
+    (38) printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 99
+
+
+state 96
+
+    (39) scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR . RPAREN PUNTOYCOMA
+
+    RPAREN          shift and go to state 100
+
+
+state 97
+
+    (43) for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA . assignment_statement RPAREN block
+    (25) assignment_statement -> . IDENTIFICADOR IGUAL expression PUNTOYCOMA
+    (26) assignment_statement -> . IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA
+
+    IDENTIFICADOR   shift and go to state 65
+
+    assignment_statement           shift and go to state 101
+
+state 98
+
+    (26) assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .
+
+    TIPODATO        reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    PRINTF          reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    SCANF           reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    FOR             reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    IF              reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    ELSE            reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    RLLAVE          reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    PUNTOYCOMA      reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+    RPAREN          reduce using rule 26 (assignment_statement -> IDENTIFICADOR CORCHETEIZQ expression CORCHETEDER IGUAL expression PUNTOYCOMA .)
+
+
+state 99
+
+    (38) printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .
+
+    TIPODATO        reduce using rule 38 (printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 38 (printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .)
+    PRINTF          reduce using rule 38 (printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .)
+    SCANF           reduce using rule 38 (printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .)
+    FOR             reduce using rule 38 (printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .)
+    IF              reduce using rule 38 (printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .)
+    ELSE            reduce using rule 38 (printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .)
+    RLLAVE          reduce using rule 38 (printf_statement -> PRINTF LPAREN CADENA COMA expression RPAREN PUNTOYCOMA .)
+
+
+state 100
+
+    (39) scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN . PUNTOYCOMA
+
+    PUNTOYCOMA      shift and go to state 102
+
+
+state 101
+
+    (43) for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement . RPAREN block
+
+    RPAREN          shift and go to state 103
+
+
+state 102
+
+    (39) scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .
+
+    TIPODATO        reduce using rule 39 (scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .)
+    IDENTIFICADOR   reduce using rule 39 (scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .)
+    PRINTF          reduce using rule 39 (scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .)
+    SCANF           reduce using rule 39 (scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .)
+    FOR             reduce using rule 39 (scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .)
+    IF              reduce using rule 39 (scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .)
+    ELSE            reduce using rule 39 (scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .)
+    RLLAVE          reduce using rule 39 (scanf_statement -> SCANF LPAREN CADENA COMA AMPERSAND IDENTIFICADOR RPAREN PUNTOYCOMA .)
+
+
+state 103
+
+    (43) for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN . block
+    (11) block -> . LLLAVE RLLAVE
+    (12) block -> . LLLAVE statement_list RLLAVE
+
+    LLLAVE          shift and go to state 22
+
+    block                          shift and go to state 104
+
+state 104
+
+    (43) for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .
+
+    TIPODATO        reduce using rule 43 (for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .)
+    IDENTIFICADOR   reduce using rule 43 (for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .)
+    PRINTF          reduce using rule 43 (for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .)
+    SCANF           reduce using rule 43 (for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .)
+    FOR             reduce using rule 43 (for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .)
+    IF              reduce using rule 43 (for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .)
+    ELSE            reduce using rule 43 (for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .)
+    RLLAVE          reduce using rule 43 (for_statement -> FOR LPAREN assignment_statement PUNTOYCOMA condition PUNTOYCOMA assignment_statement RPAREN block .)
+
