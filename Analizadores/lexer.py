@@ -18,13 +18,13 @@ t_RPAREN = r'\)'
 t_CORCHETEIZQ = r'\['
 t_CORCHETEDER = r'\]'
 t_PUNTOYCOMA = r';'
+t_COMPARADOR = r'==|!=|<=|>=|<|>'
 t_IGUAL = r'='
 t_AMPERSAND = r'&'
 t_COMA = r','
 t_PUNTO = r'\.'
 t_LLLAVE = r'\{'
 t_RLLAVE = r'\}'
-t_COMPARADOR = r'==|!=|<=|>=|<|>'
 t_ignore = ' \t\n'  # Ignorar espacios, tabulaciones y nuevas líneas
 
 # Palabra reservada 'for'
@@ -63,7 +63,7 @@ def t_CARACTER(t):
 
 # Tipos de datos
 def t_TIPODATO(t):
-    r'int|float|char|double|void'
+    r'int|float|char|double|void|bool'
     return t
 
 # Directivas de preprocesador
@@ -95,19 +95,21 @@ def t_error(t):
 # Crear el lexer
 lexer = lex.lex()
 
-if __name__ == "__main__": 
-    with open("Common Files\TesterFile.c", "r") as file:
-        data = file.read()
+if __name__ == "__main__":
+    try:
+        with open(r"Common Files\TesterFile.c", "r") as file:
+            data = file.read()
+    except FileNotFoundError:
+        print("El archivo no se encuentra.")
+        exit()
 
-    lexer.input(data) 
-    print(f"\nAnalizando: {data}") 
-
-    with open("output.txt", "w") as file:
-        pass
+    lexer.input(data)
+    print(f"\nAnalizando: {data}")
 
     with open("output.txt", "w") as file:
         for token in lexer:
             file.write(f"{token.type} {token.value}\n")
 
-    for token in lexer: 
-        print(token.type, token.value)
+""" 
+for token in lexer:
+    print(f"{token.type} {token.value} ") """
