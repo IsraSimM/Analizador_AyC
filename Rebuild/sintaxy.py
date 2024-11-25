@@ -304,7 +304,7 @@ def pretty_print_tree(node, indent=0):
         print(f"{spacer}{node}")
 
 
-with open("Common Files/CorrectedProgram.c", "r") as file:
+with open("./Common Files/CorrectedProgram.c", "r") as file:
     data = file.read()
 result = parser.parse(data)        
 
