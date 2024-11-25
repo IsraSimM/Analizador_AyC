@@ -1,0 +1,2289 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DOT
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> INCLUDE HEADER program
+Rule 2     program -> function
+Rule 3     function -> INT MAIN LPAREN RPAREN LBRACE statement_list RBRACE
+Rule 4     statement_list -> statement_list statement
+Rule 5     statement_list -> statement
+Rule 6     statement -> declaration
+Rule 7     statement -> assignment
+Rule 8     statement -> for_loop
+Rule 9     statement -> if_statement
+Rule 10    statement -> function_call
+Rule 11    statement -> return_statement
+Rule 12    identifier_list -> IDENTIFIER
+Rule 13    identifier_list -> IDENTIFIER COMMA identifier_list
+Rule 14    declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON
+Rule 15    declaration -> type_specifier identifier_list SEMICOLON
+Rule 16    declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+Rule 17    type_specifier -> INT
+Rule 18    type_specifier -> FLOAT
+Rule 19    type_specifier -> CHAR
+Rule 20    compound_assignment -> PLUS EQUAL
+Rule 21    compound_assignment -> MINUS EQUAL
+Rule 22    compound_assignment -> TIMES EQUAL
+Rule 23    compound_assignment -> DIVIDE EQUAL
+Rule 24    assignment -> IDENTIFIER EQUAL expression SEMICOLON
+Rule 25    assignment -> IDENTIFIER compound_assignment expression SEMICOLON
+Rule 26    assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+Rule 27    assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+Rule 28    expression -> expression PLUS expression
+Rule 29    expression -> expression MINUS expression
+Rule 30    expression -> expression TIMES expression
+Rule 31    expression -> expression DIVIDE expression
+Rule 32    expression -> LPAREN expression RPAREN
+Rule 33    expression -> NUMBER
+Rule 34    expression -> CHAR_LITERAL
+Rule 35    expression -> CHAR
+Rule 36    expression -> IDENTIFIER
+Rule 37    expression -> IDENTIFIER LBRAKET expression RBRAKET
+Rule 38    expression_list -> expression
+Rule 39    expression_list -> expression COMMA expression_list
+Rule 40    unitarymodifiers -> IDENTIFIER PLUS PLUS
+Rule 41    unitarymodifiers -> IDENTIFIER MINUS MINUS
+Rule 42    for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+Rule 43    condition -> expression COMPARER expression
+Rule 44    if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+Rule 45    if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+Rule 46    function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+Rule 47    function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON
+Rule 48    function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+Rule 49    function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+Rule 50    return_statement -> RETURN SEMICOLON
+Rule 51    return_statement -> RETURN expression SEMICOLON
+
+Terminals, with rules where they appear
+
+AMPERSAND            : 49
+CHAR                 : 19 35
+CHAR_LITERAL         : 34
+COMMA                : 13 39 46 48 49
+COMPARER             : 43
+DIVIDE               : 23 31
+DOT                  : 
+ELSE                 : 45
+EQUAL                : 14 20 21 22 23 24 27
+FLOAT                : 18
+FOR                  : 42
+HEADER               : 1
+IDENTIFIER           : 12 13 14 24 25 26 27 36 37 40 41 46 49
+IF                   : 44 45
+INCLUDE              : 1
+INT                  : 3 17
+LBRACE               : 3 42 44 45 45
+LBRAKET              : 16 26 27 37
+LPAREN               : 3 32 42 44 45 46 47 48 49
+MAIN                 : 3
+MINUS                : 21 29 41 41
+NUMBER               : 16 33
+PLUS                 : 20 28 40 40
+PRINTF               : 46 47 48
+RBRACE               : 3 42 44 45 45
+RBRAKET              : 16 26 27 37
+RETURN               : 50 51
+RPAREN               : 3 32 42 44 45 46 47 48 49
+SCANF                : 49
+SEMICOLON            : 14 15 16 24 25 26 27 42 46 47 48 49 50 51
+STRING               : 46 47 48 49
+TIMES                : 22 30
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 7 42
+compound_assignment  : 25 26
+condition            : 42 44 45
+declaration          : 6
+expression           : 14 24 25 26 26 27 27 28 28 29 29 30 30 31 31 32 37 38 39 43 43 51
+expression_list      : 39 48
+for_loop             : 8
+function             : 2
+function_call        : 10
+identifier_list      : 13 15 16
+if_statement         : 9
+program              : 1 0
+return_statement     : 11
+statement            : 4 5
+statement_list       : 3 4 42 44 45 45
+type_specifier       : 14 15 16
+unitarymodifiers     : 42
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . INCLUDE HEADER program
+    (2) program -> . function
+    (3) function -> . INT MAIN LPAREN RPAREN LBRACE statement_list RBRACE
+
+    INCLUDE         shift and go to state 2
+    INT             shift and go to state 4
+
+    program                        shift and go to state 1
+    function                       shift and go to state 3
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> INCLUDE . HEADER program
+
+    HEADER          shift and go to state 5
+
+
+state 3
+
+    (2) program -> function .
+
+    $end            reduce using rule 2 (program -> function .)
+
+
+state 4
+
+    (3) function -> INT . MAIN LPAREN RPAREN LBRACE statement_list RBRACE
+
+    MAIN            shift and go to state 6
+
+
+state 5
+
+    (1) program -> INCLUDE HEADER . program
+    (1) program -> . INCLUDE HEADER program
+    (2) program -> . function
+    (3) function -> . INT MAIN LPAREN RPAREN LBRACE statement_list RBRACE
+
+    INCLUDE         shift and go to state 2
+    INT             shift and go to state 4
+
+    program                        shift and go to state 7
+    function                       shift and go to state 3
+
+state 6
+
+    (3) function -> INT MAIN . LPAREN RPAREN LBRACE statement_list RBRACE
+
+    LPAREN          shift and go to state 8
+
+
+state 7
+
+    (1) program -> INCLUDE HEADER program .
+
+    $end            reduce using rule 1 (program -> INCLUDE HEADER program .)
+
+
+state 8
+
+    (3) function -> INT MAIN LPAREN . RPAREN LBRACE statement_list RBRACE
+
+    RPAREN          shift and go to state 9
+
+
+state 9
+
+    (3) function -> INT MAIN LPAREN RPAREN . LBRACE statement_list RBRACE
+
+    LBRACE          shift and go to state 10
+
+
+state 10
+
+    (3) function -> INT MAIN LPAREN RPAREN LBRACE . statement_list RBRACE
+    (4) statement_list -> . statement_list statement
+    (5) statement_list -> . statement
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . if_statement
+    (10) statement -> . function_call
+    (11) statement -> . return_statement
+    (14) declaration -> . type_specifier IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> . type_specifier identifier_list SEMICOLON
+    (16) declaration -> . type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (42) for_loop -> . FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (44) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (46) function_call -> . PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> . PRINTF LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> . PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+    (49) function_call -> . SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+    (50) return_statement -> . RETURN SEMICOLON
+    (51) return_statement -> . RETURN expression SEMICOLON
+    (17) type_specifier -> . INT
+    (18) type_specifier -> . FLOAT
+    (19) type_specifier -> . CHAR
+
+    IDENTIFIER      shift and go to state 21
+    FOR             shift and go to state 22
+    IF              shift and go to state 23
+    PRINTF          shift and go to state 24
+    SCANF           shift and go to state 25
+    RETURN          shift and go to state 26
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 27
+    CHAR            shift and go to state 28
+
+    statement_list                 shift and go to state 12
+    statement                      shift and go to state 13
+    declaration                    shift and go to state 14
+    assignment                     shift and go to state 15
+    for_loop                       shift and go to state 16
+    if_statement                   shift and go to state 17
+    function_call                  shift and go to state 18
+    return_statement               shift and go to state 19
+    type_specifier                 shift and go to state 20
+
+state 11
+
+    (17) type_specifier -> INT .
+
+    IDENTIFIER      reduce using rule 17 (type_specifier -> INT .)
+
+
+state 12
+
+    (3) function -> INT MAIN LPAREN RPAREN LBRACE statement_list . RBRACE
+    (4) statement_list -> statement_list . statement
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . if_statement
+    (10) statement -> . function_call
+    (11) statement -> . return_statement
+    (14) declaration -> . type_specifier IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> . type_specifier identifier_list SEMICOLON
+    (16) declaration -> . type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (42) for_loop -> . FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (44) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (46) function_call -> . PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> . PRINTF LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> . PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+    (49) function_call -> . SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+    (50) return_statement -> . RETURN SEMICOLON
+    (51) return_statement -> . RETURN expression SEMICOLON
+    (17) type_specifier -> . INT
+    (18) type_specifier -> . FLOAT
+    (19) type_specifier -> . CHAR
+
+    RBRACE          shift and go to state 29
+    IDENTIFIER      shift and go to state 21
+    FOR             shift and go to state 22
+    IF              shift and go to state 23
+    PRINTF          shift and go to state 24
+    SCANF           shift and go to state 25
+    RETURN          shift and go to state 26
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 27
+    CHAR            shift and go to state 28
+
+    statement                      shift and go to state 30
+    declaration                    shift and go to state 14
+    assignment                     shift and go to state 15
+    for_loop                       shift and go to state 16
+    if_statement                   shift and go to state 17
+    function_call                  shift and go to state 18
+    return_statement               shift and go to state 19
+    type_specifier                 shift and go to state 20
+
+state 13
+
+    (5) statement_list -> statement .
+
+    RBRACE          reduce using rule 5 (statement_list -> statement .)
+    IDENTIFIER      reduce using rule 5 (statement_list -> statement .)
+    FOR             reduce using rule 5 (statement_list -> statement .)
+    IF              reduce using rule 5 (statement_list -> statement .)
+    PRINTF          reduce using rule 5 (statement_list -> statement .)
+    SCANF           reduce using rule 5 (statement_list -> statement .)
+    RETURN          reduce using rule 5 (statement_list -> statement .)
+    INT             reduce using rule 5 (statement_list -> statement .)
+    FLOAT           reduce using rule 5 (statement_list -> statement .)
+    CHAR            reduce using rule 5 (statement_list -> statement .)
+
+
+state 14
+
+    (6) statement -> declaration .
+
+    RBRACE          reduce using rule 6 (statement -> declaration .)
+    IDENTIFIER      reduce using rule 6 (statement -> declaration .)
+    FOR             reduce using rule 6 (statement -> declaration .)
+    IF              reduce using rule 6 (statement -> declaration .)
+    PRINTF          reduce using rule 6 (statement -> declaration .)
+    SCANF           reduce using rule 6 (statement -> declaration .)
+    RETURN          reduce using rule 6 (statement -> declaration .)
+    INT             reduce using rule 6 (statement -> declaration .)
+    FLOAT           reduce using rule 6 (statement -> declaration .)
+    CHAR            reduce using rule 6 (statement -> declaration .)
+
+
+state 15
+
+    (7) statement -> assignment .
+
+    RBRACE          reduce using rule 7 (statement -> assignment .)
+    IDENTIFIER      reduce using rule 7 (statement -> assignment .)
+    FOR             reduce using rule 7 (statement -> assignment .)
+    IF              reduce using rule 7 (statement -> assignment .)
+    PRINTF          reduce using rule 7 (statement -> assignment .)
+    SCANF           reduce using rule 7 (statement -> assignment .)
+    RETURN          reduce using rule 7 (statement -> assignment .)
+    INT             reduce using rule 7 (statement -> assignment .)
+    FLOAT           reduce using rule 7 (statement -> assignment .)
+    CHAR            reduce using rule 7 (statement -> assignment .)
+
+
+state 16
+
+    (8) statement -> for_loop .
+
+    RBRACE          reduce using rule 8 (statement -> for_loop .)
+    IDENTIFIER      reduce using rule 8 (statement -> for_loop .)
+    FOR             reduce using rule 8 (statement -> for_loop .)
+    IF              reduce using rule 8 (statement -> for_loop .)
+    PRINTF          reduce using rule 8 (statement -> for_loop .)
+    SCANF           reduce using rule 8 (statement -> for_loop .)
+    RETURN          reduce using rule 8 (statement -> for_loop .)
+    INT             reduce using rule 8 (statement -> for_loop .)
+    FLOAT           reduce using rule 8 (statement -> for_loop .)
+    CHAR            reduce using rule 8 (statement -> for_loop .)
+
+
+state 17
+
+    (9) statement -> if_statement .
+
+    RBRACE          reduce using rule 9 (statement -> if_statement .)
+    IDENTIFIER      reduce using rule 9 (statement -> if_statement .)
+    FOR             reduce using rule 9 (statement -> if_statement .)
+    IF              reduce using rule 9 (statement -> if_statement .)
+    PRINTF          reduce using rule 9 (statement -> if_statement .)
+    SCANF           reduce using rule 9 (statement -> if_statement .)
+    RETURN          reduce using rule 9 (statement -> if_statement .)
+    INT             reduce using rule 9 (statement -> if_statement .)
+    FLOAT           reduce using rule 9 (statement -> if_statement .)
+    CHAR            reduce using rule 9 (statement -> if_statement .)
+
+
+state 18
+
+    (10) statement -> function_call .
+
+    RBRACE          reduce using rule 10 (statement -> function_call .)
+    IDENTIFIER      reduce using rule 10 (statement -> function_call .)
+    FOR             reduce using rule 10 (statement -> function_call .)
+    IF              reduce using rule 10 (statement -> function_call .)
+    PRINTF          reduce using rule 10 (statement -> function_call .)
+    SCANF           reduce using rule 10 (statement -> function_call .)
+    RETURN          reduce using rule 10 (statement -> function_call .)
+    INT             reduce using rule 10 (statement -> function_call .)
+    FLOAT           reduce using rule 10 (statement -> function_call .)
+    CHAR            reduce using rule 10 (statement -> function_call .)
+
+
+state 19
+
+    (11) statement -> return_statement .
+
+    RBRACE          reduce using rule 11 (statement -> return_statement .)
+    IDENTIFIER      reduce using rule 11 (statement -> return_statement .)
+    FOR             reduce using rule 11 (statement -> return_statement .)
+    IF              reduce using rule 11 (statement -> return_statement .)
+    PRINTF          reduce using rule 11 (statement -> return_statement .)
+    SCANF           reduce using rule 11 (statement -> return_statement .)
+    RETURN          reduce using rule 11 (statement -> return_statement .)
+    INT             reduce using rule 11 (statement -> return_statement .)
+    FLOAT           reduce using rule 11 (statement -> return_statement .)
+    CHAR            reduce using rule 11 (statement -> return_statement .)
+
+
+state 20
+
+    (14) declaration -> type_specifier . IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> type_specifier . identifier_list SEMICOLON
+    (16) declaration -> type_specifier . identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (12) identifier_list -> . IDENTIFIER
+    (13) identifier_list -> . IDENTIFIER COMMA identifier_list
+
+    IDENTIFIER      shift and go to state 31
+
+    identifier_list                shift and go to state 32
+
+state 21
+
+    (24) assignment -> IDENTIFIER . EQUAL expression SEMICOLON
+    (25) assignment -> IDENTIFIER . compound_assignment expression SEMICOLON
+    (26) assignment -> IDENTIFIER . LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> IDENTIFIER . LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (20) compound_assignment -> . PLUS EQUAL
+    (21) compound_assignment -> . MINUS EQUAL
+    (22) compound_assignment -> . TIMES EQUAL
+    (23) compound_assignment -> . DIVIDE EQUAL
+
+    EQUAL           shift and go to state 33
+    LBRAKET         shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+
+    compound_assignment            shift and go to state 34
+
+state 22
+
+    (42) for_loop -> FOR . LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+
+    LPAREN          shift and go to state 40
+
+
+state 23
+
+    (44) if_statement -> IF . LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> IF . LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+
+    LPAREN          shift and go to state 41
+
+
+state 24
+
+    (46) function_call -> PRINTF . LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> PRINTF . LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> PRINTF . LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 42
+
+
+state 25
+
+    (49) function_call -> SCANF . LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 43
+
+
+state 26
+
+    (50) return_statement -> RETURN . SEMICOLON
+    (51) return_statement -> RETURN . expression SEMICOLON
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    SEMICOLON       shift and go to state 44
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 45
+
+state 27
+
+    (18) type_specifier -> FLOAT .
+
+    IDENTIFIER      reduce using rule 18 (type_specifier -> FLOAT .)
+
+
+state 28
+
+    (19) type_specifier -> CHAR .
+
+    IDENTIFIER      reduce using rule 19 (type_specifier -> CHAR .)
+
+
+state 29
+
+    (3) function -> INT MAIN LPAREN RPAREN LBRACE statement_list RBRACE .
+
+    $end            reduce using rule 3 (function -> INT MAIN LPAREN RPAREN LBRACE statement_list RBRACE .)
+
+
+state 30
+
+    (4) statement_list -> statement_list statement .
+
+    RBRACE          reduce using rule 4 (statement_list -> statement_list statement .)
+    IDENTIFIER      reduce using rule 4 (statement_list -> statement_list statement .)
+    FOR             reduce using rule 4 (statement_list -> statement_list statement .)
+    IF              reduce using rule 4 (statement_list -> statement_list statement .)
+    PRINTF          reduce using rule 4 (statement_list -> statement_list statement .)
+    SCANF           reduce using rule 4 (statement_list -> statement_list statement .)
+    RETURN          reduce using rule 4 (statement_list -> statement_list statement .)
+    INT             reduce using rule 4 (statement_list -> statement_list statement .)
+    FLOAT           reduce using rule 4 (statement_list -> statement_list statement .)
+    CHAR            reduce using rule 4 (statement_list -> statement_list statement .)
+
+
+state 31
+
+    (14) declaration -> type_specifier IDENTIFIER . EQUAL expression SEMICOLON
+    (12) identifier_list -> IDENTIFIER .
+    (13) identifier_list -> IDENTIFIER . COMMA identifier_list
+
+    EQUAL           shift and go to state 51
+    SEMICOLON       reduce using rule 12 (identifier_list -> IDENTIFIER .)
+    LBRAKET         reduce using rule 12 (identifier_list -> IDENTIFIER .)
+    COMMA           shift and go to state 52
+
+
+state 32
+
+    (15) declaration -> type_specifier identifier_list . SEMICOLON
+    (16) declaration -> type_specifier identifier_list . LBRAKET NUMBER RBRAKET SEMICOLON
+
+    SEMICOLON       shift and go to state 53
+    LBRAKET         shift and go to state 54
+
+
+state 33
+
+    (24) assignment -> IDENTIFIER EQUAL . expression SEMICOLON
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 55
+
+state 34
+
+    (25) assignment -> IDENTIFIER compound_assignment . expression SEMICOLON
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 56
+
+state 35
+
+    (26) assignment -> IDENTIFIER LBRAKET . expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> IDENTIFIER LBRAKET . expression RBRAKET EQUAL expression SEMICOLON
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 57
+
+state 36
+
+    (20) compound_assignment -> PLUS . EQUAL
+
+    EQUAL           shift and go to state 58
+
+
+state 37
+
+    (21) compound_assignment -> MINUS . EQUAL
+
+    EQUAL           shift and go to state 59
+
+
+state 38
+
+    (22) compound_assignment -> TIMES . EQUAL
+
+    EQUAL           shift and go to state 60
+
+
+state 39
+
+    (23) compound_assignment -> DIVIDE . EQUAL
+
+    EQUAL           shift and go to state 61
+
+
+state 40
+
+    (42) for_loop -> FOR LPAREN . assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+
+    IDENTIFIER      shift and go to state 21
+
+    assignment                     shift and go to state 62
+
+state 41
+
+    (44) if_statement -> IF LPAREN . condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> IF LPAREN . condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (43) condition -> . expression COMPARER expression
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    condition                      shift and go to state 63
+    expression                     shift and go to state 64
+
+state 42
+
+    (46) function_call -> PRINTF LPAREN . STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> PRINTF LPAREN . STRING RPAREN SEMICOLON
+    (48) function_call -> PRINTF LPAREN . STRING COMMA expression_list RPAREN SEMICOLON
+
+    STRING          shift and go to state 65
+
+
+state 43
+
+    (49) function_call -> SCANF LPAREN . STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+
+    STRING          shift and go to state 66
+
+
+state 44
+
+    (50) return_statement -> RETURN SEMICOLON .
+
+    RBRACE          reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    IDENTIFIER      reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    FOR             reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    IF              reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    PRINTF          reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    SCANF           reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    RETURN          reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    INT             reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    FLOAT           reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+    CHAR            reduce using rule 50 (return_statement -> RETURN SEMICOLON .)
+
+
+state 45
+
+    (51) return_statement -> RETURN expression . SEMICOLON
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 67
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 46
+
+    (32) expression -> LPAREN . expression RPAREN
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 72
+
+state 47
+
+    (33) expression -> NUMBER .
+
+    SEMICOLON       reduce using rule 33 (expression -> NUMBER .)
+    PLUS            reduce using rule 33 (expression -> NUMBER .)
+    MINUS           reduce using rule 33 (expression -> NUMBER .)
+    TIMES           reduce using rule 33 (expression -> NUMBER .)
+    DIVIDE          reduce using rule 33 (expression -> NUMBER .)
+    RBRAKET         reduce using rule 33 (expression -> NUMBER .)
+    COMPARER        reduce using rule 33 (expression -> NUMBER .)
+    RPAREN          reduce using rule 33 (expression -> NUMBER .)
+    COMMA           reduce using rule 33 (expression -> NUMBER .)
+
+
+state 48
+
+    (34) expression -> CHAR_LITERAL .
+
+    SEMICOLON       reduce using rule 34 (expression -> CHAR_LITERAL .)
+    PLUS            reduce using rule 34 (expression -> CHAR_LITERAL .)
+    MINUS           reduce using rule 34 (expression -> CHAR_LITERAL .)
+    TIMES           reduce using rule 34 (expression -> CHAR_LITERAL .)
+    DIVIDE          reduce using rule 34 (expression -> CHAR_LITERAL .)
+    RBRAKET         reduce using rule 34 (expression -> CHAR_LITERAL .)
+    COMPARER        reduce using rule 34 (expression -> CHAR_LITERAL .)
+    RPAREN          reduce using rule 34 (expression -> CHAR_LITERAL .)
+    COMMA           reduce using rule 34 (expression -> CHAR_LITERAL .)
+
+
+state 49
+
+    (35) expression -> CHAR .
+
+    SEMICOLON       reduce using rule 35 (expression -> CHAR .)
+    PLUS            reduce using rule 35 (expression -> CHAR .)
+    MINUS           reduce using rule 35 (expression -> CHAR .)
+    TIMES           reduce using rule 35 (expression -> CHAR .)
+    DIVIDE          reduce using rule 35 (expression -> CHAR .)
+    RBRAKET         reduce using rule 35 (expression -> CHAR .)
+    COMPARER        reduce using rule 35 (expression -> CHAR .)
+    RPAREN          reduce using rule 35 (expression -> CHAR .)
+    COMMA           reduce using rule 35 (expression -> CHAR .)
+
+
+state 50
+
+    (36) expression -> IDENTIFIER .
+    (37) expression -> IDENTIFIER . LBRAKET expression RBRAKET
+
+    SEMICOLON       reduce using rule 36 (expression -> IDENTIFIER .)
+    PLUS            reduce using rule 36 (expression -> IDENTIFIER .)
+    MINUS           reduce using rule 36 (expression -> IDENTIFIER .)
+    TIMES           reduce using rule 36 (expression -> IDENTIFIER .)
+    DIVIDE          reduce using rule 36 (expression -> IDENTIFIER .)
+    RBRAKET         reduce using rule 36 (expression -> IDENTIFIER .)
+    COMPARER        reduce using rule 36 (expression -> IDENTIFIER .)
+    RPAREN          reduce using rule 36 (expression -> IDENTIFIER .)
+    COMMA           reduce using rule 36 (expression -> IDENTIFIER .)
+    LBRAKET         shift and go to state 73
+
+
+state 51
+
+    (14) declaration -> type_specifier IDENTIFIER EQUAL . expression SEMICOLON
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 74
+
+state 52
+
+    (13) identifier_list -> IDENTIFIER COMMA . identifier_list
+    (12) identifier_list -> . IDENTIFIER
+    (13) identifier_list -> . IDENTIFIER COMMA identifier_list
+
+    IDENTIFIER      shift and go to state 75
+
+    identifier_list                shift and go to state 76
+
+state 53
+
+    (15) declaration -> type_specifier identifier_list SEMICOLON .
+
+    RBRACE          reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    IDENTIFIER      reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    FOR             reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    IF              reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    PRINTF          reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    SCANF           reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    RETURN          reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    INT             reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    FLOAT           reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+    CHAR            reduce using rule 15 (declaration -> type_specifier identifier_list SEMICOLON .)
+
+
+state 54
+
+    (16) declaration -> type_specifier identifier_list LBRAKET . NUMBER RBRAKET SEMICOLON
+
+    NUMBER          shift and go to state 77
+
+
+state 55
+
+    (24) assignment -> IDENTIFIER EQUAL expression . SEMICOLON
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 78
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 56
+
+    (25) assignment -> IDENTIFIER compound_assignment expression . SEMICOLON
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 79
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 57
+
+    (26) assignment -> IDENTIFIER LBRAKET expression . RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> IDENTIFIER LBRAKET expression . RBRAKET EQUAL expression SEMICOLON
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    RBRAKET         shift and go to state 80
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 58
+
+    (20) compound_assignment -> PLUS EQUAL .
+
+    LPAREN          reduce using rule 20 (compound_assignment -> PLUS EQUAL .)
+    NUMBER          reduce using rule 20 (compound_assignment -> PLUS EQUAL .)
+    CHAR_LITERAL    reduce using rule 20 (compound_assignment -> PLUS EQUAL .)
+    CHAR            reduce using rule 20 (compound_assignment -> PLUS EQUAL .)
+    IDENTIFIER      reduce using rule 20 (compound_assignment -> PLUS EQUAL .)
+
+
+state 59
+
+    (21) compound_assignment -> MINUS EQUAL .
+
+    LPAREN          reduce using rule 21 (compound_assignment -> MINUS EQUAL .)
+    NUMBER          reduce using rule 21 (compound_assignment -> MINUS EQUAL .)
+    CHAR_LITERAL    reduce using rule 21 (compound_assignment -> MINUS EQUAL .)
+    CHAR            reduce using rule 21 (compound_assignment -> MINUS EQUAL .)
+    IDENTIFIER      reduce using rule 21 (compound_assignment -> MINUS EQUAL .)
+
+
+state 60
+
+    (22) compound_assignment -> TIMES EQUAL .
+
+    LPAREN          reduce using rule 22 (compound_assignment -> TIMES EQUAL .)
+    NUMBER          reduce using rule 22 (compound_assignment -> TIMES EQUAL .)
+    CHAR_LITERAL    reduce using rule 22 (compound_assignment -> TIMES EQUAL .)
+    CHAR            reduce using rule 22 (compound_assignment -> TIMES EQUAL .)
+    IDENTIFIER      reduce using rule 22 (compound_assignment -> TIMES EQUAL .)
+
+
+state 61
+
+    (23) compound_assignment -> DIVIDE EQUAL .
+
+    LPAREN          reduce using rule 23 (compound_assignment -> DIVIDE EQUAL .)
+    NUMBER          reduce using rule 23 (compound_assignment -> DIVIDE EQUAL .)
+    CHAR_LITERAL    reduce using rule 23 (compound_assignment -> DIVIDE EQUAL .)
+    CHAR            reduce using rule 23 (compound_assignment -> DIVIDE EQUAL .)
+    IDENTIFIER      reduce using rule 23 (compound_assignment -> DIVIDE EQUAL .)
+
+
+state 62
+
+    (42) for_loop -> FOR LPAREN assignment . condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (43) condition -> . expression COMPARER expression
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    condition                      shift and go to state 81
+    expression                     shift and go to state 64
+
+state 63
+
+    (44) if_statement -> IF LPAREN condition . RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> IF LPAREN condition . RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+
+    RPAREN          shift and go to state 82
+
+
+state 64
+
+    (43) condition -> expression . COMPARER expression
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    COMPARER        shift and go to state 83
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 65
+
+    (46) function_call -> PRINTF LPAREN STRING . COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> PRINTF LPAREN STRING . RPAREN SEMICOLON
+    (48) function_call -> PRINTF LPAREN STRING . COMMA expression_list RPAREN SEMICOLON
+
+    COMMA           shift and go to state 84
+    RPAREN          shift and go to state 85
+
+
+state 66
+
+    (49) function_call -> SCANF LPAREN STRING . COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+
+    COMMA           shift and go to state 86
+
+
+state 67
+
+    (51) return_statement -> RETURN expression SEMICOLON .
+
+    RBRACE          reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    FOR             reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    IF              reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    PRINTF          reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    SCANF           reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    RETURN          reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    INT             reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    FLOAT           reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+    CHAR            reduce using rule 51 (return_statement -> RETURN expression SEMICOLON .)
+
+
+state 68
+
+    (28) expression -> expression PLUS . expression
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 87
+
+state 69
+
+    (29) expression -> expression MINUS . expression
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 88
+
+state 70
+
+    (30) expression -> expression TIMES . expression
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 89
+
+state 71
+
+    (31) expression -> expression DIVIDE . expression
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 90
+
+state 72
+
+    (32) expression -> LPAREN expression . RPAREN
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    RPAREN          shift and go to state 91
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 73
+
+    (37) expression -> IDENTIFIER LBRAKET . expression RBRAKET
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 92
+
+state 74
+
+    (14) declaration -> type_specifier IDENTIFIER EQUAL expression . SEMICOLON
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 93
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 75
+
+    (12) identifier_list -> IDENTIFIER .
+    (13) identifier_list -> IDENTIFIER . COMMA identifier_list
+
+    SEMICOLON       reduce using rule 12 (identifier_list -> IDENTIFIER .)
+    LBRAKET         reduce using rule 12 (identifier_list -> IDENTIFIER .)
+    COMMA           shift and go to state 52
+
+
+state 76
+
+    (13) identifier_list -> IDENTIFIER COMMA identifier_list .
+
+    SEMICOLON       reduce using rule 13 (identifier_list -> IDENTIFIER COMMA identifier_list .)
+    LBRAKET         reduce using rule 13 (identifier_list -> IDENTIFIER COMMA identifier_list .)
+
+
+state 77
+
+    (16) declaration -> type_specifier identifier_list LBRAKET NUMBER . RBRAKET SEMICOLON
+
+    RBRAKET         shift and go to state 94
+
+
+state 78
+
+    (24) assignment -> IDENTIFIER EQUAL expression SEMICOLON .
+
+    RBRACE          reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    FOR             reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    IF              reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    PRINTF          reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    SCANF           reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    RETURN          reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    INT             reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    FLOAT           reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    CHAR            reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    LPAREN          reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    NUMBER          reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 24 (assignment -> IDENTIFIER EQUAL expression SEMICOLON .)
+
+
+state 79
+
+    (25) assignment -> IDENTIFIER compound_assignment expression SEMICOLON .
+
+    RBRACE          reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    FOR             reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    IF              reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    PRINTF          reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    SCANF           reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    RETURN          reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    INT             reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    FLOAT           reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    CHAR            reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    LPAREN          reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    NUMBER          reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 25 (assignment -> IDENTIFIER compound_assignment expression SEMICOLON .)
+
+
+state 80
+
+    (26) assignment -> IDENTIFIER LBRAKET expression RBRAKET . compound_assignment expression SEMICOLON
+    (27) assignment -> IDENTIFIER LBRAKET expression RBRAKET . EQUAL expression SEMICOLON
+    (20) compound_assignment -> . PLUS EQUAL
+    (21) compound_assignment -> . MINUS EQUAL
+    (22) compound_assignment -> . TIMES EQUAL
+    (23) compound_assignment -> . DIVIDE EQUAL
+
+    EQUAL           shift and go to state 96
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+
+    compound_assignment            shift and go to state 95
+
+state 81
+
+    (42) for_loop -> FOR LPAREN assignment condition . SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+
+    SEMICOLON       shift and go to state 97
+
+
+state 82
+
+    (44) if_statement -> IF LPAREN condition RPAREN . LBRACE statement_list RBRACE
+    (45) if_statement -> IF LPAREN condition RPAREN . LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+
+    LBRACE          shift and go to state 98
+
+
+state 83
+
+    (43) condition -> expression COMPARER . expression
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 99
+
+state 84
+
+    (46) function_call -> PRINTF LPAREN STRING COMMA . IDENTIFIER RPAREN SEMICOLON
+    (48) function_call -> PRINTF LPAREN STRING COMMA . expression_list RPAREN SEMICOLON
+    (38) expression_list -> . expression
+    (39) expression_list -> . expression COMMA expression_list
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    IDENTIFIER      shift and go to state 100
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+
+    expression_list                shift and go to state 101
+    expression                     shift and go to state 102
+
+state 85
+
+    (47) function_call -> PRINTF LPAREN STRING RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 103
+
+
+state 86
+
+    (49) function_call -> SCANF LPAREN STRING COMMA . AMPERSAND IDENTIFIER RPAREN SEMICOLON
+
+    AMPERSAND       shift and go to state 104
+
+
+state 87
+
+    (28) expression -> expression PLUS expression .
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 28 (expression -> expression PLUS expression .)
+    RBRAKET         reduce using rule 28 (expression -> expression PLUS expression .)
+    COMPARER        reduce using rule 28 (expression -> expression PLUS expression .)
+    RPAREN          reduce using rule 28 (expression -> expression PLUS expression .)
+    COMMA           reduce using rule 28 (expression -> expression PLUS expression .)
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+  ! PLUS            [ reduce using rule 28 (expression -> expression PLUS expression .) ]
+  ! MINUS           [ reduce using rule 28 (expression -> expression PLUS expression .) ]
+  ! TIMES           [ reduce using rule 28 (expression -> expression PLUS expression .) ]
+  ! DIVIDE          [ reduce using rule 28 (expression -> expression PLUS expression .) ]
+
+
+state 88
+
+    (29) expression -> expression MINUS expression .
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 29 (expression -> expression MINUS expression .)
+    RBRAKET         reduce using rule 29 (expression -> expression MINUS expression .)
+    COMPARER        reduce using rule 29 (expression -> expression MINUS expression .)
+    RPAREN          reduce using rule 29 (expression -> expression MINUS expression .)
+    COMMA           reduce using rule 29 (expression -> expression MINUS expression .)
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+  ! PLUS            [ reduce using rule 29 (expression -> expression MINUS expression .) ]
+  ! MINUS           [ reduce using rule 29 (expression -> expression MINUS expression .) ]
+  ! TIMES           [ reduce using rule 29 (expression -> expression MINUS expression .) ]
+  ! DIVIDE          [ reduce using rule 29 (expression -> expression MINUS expression .) ]
+
+
+state 89
+
+    (30) expression -> expression TIMES expression .
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 30 (expression -> expression TIMES expression .)
+    RBRAKET         reduce using rule 30 (expression -> expression TIMES expression .)
+    COMPARER        reduce using rule 30 (expression -> expression TIMES expression .)
+    RPAREN          reduce using rule 30 (expression -> expression TIMES expression .)
+    COMMA           reduce using rule 30 (expression -> expression TIMES expression .)
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+  ! PLUS            [ reduce using rule 30 (expression -> expression TIMES expression .) ]
+  ! MINUS           [ reduce using rule 30 (expression -> expression TIMES expression .) ]
+  ! TIMES           [ reduce using rule 30 (expression -> expression TIMES expression .) ]
+  ! DIVIDE          [ reduce using rule 30 (expression -> expression TIMES expression .) ]
+
+
+state 90
+
+    (31) expression -> expression DIVIDE expression .
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    SEMICOLON       reduce using rule 31 (expression -> expression DIVIDE expression .)
+    RBRAKET         reduce using rule 31 (expression -> expression DIVIDE expression .)
+    COMPARER        reduce using rule 31 (expression -> expression DIVIDE expression .)
+    RPAREN          reduce using rule 31 (expression -> expression DIVIDE expression .)
+    COMMA           reduce using rule 31 (expression -> expression DIVIDE expression .)
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+  ! PLUS            [ reduce using rule 31 (expression -> expression DIVIDE expression .) ]
+  ! MINUS           [ reduce using rule 31 (expression -> expression DIVIDE expression .) ]
+  ! TIMES           [ reduce using rule 31 (expression -> expression DIVIDE expression .) ]
+  ! DIVIDE          [ reduce using rule 31 (expression -> expression DIVIDE expression .) ]
+
+
+state 91
+
+    (32) expression -> LPAREN expression RPAREN .
+
+    SEMICOLON       reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+    TIMES           reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+    RBRAKET         reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+    COMPARER        reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 32 (expression -> LPAREN expression RPAREN .)
+
+
+state 92
+
+    (37) expression -> IDENTIFIER LBRAKET expression . RBRAKET
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    RBRAKET         shift and go to state 105
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 93
+
+    (14) declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .
+
+    RBRACE          reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    FOR             reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    IF              reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    PRINTF          reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    SCANF           reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    RETURN          reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    INT             reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    FLOAT           reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+    CHAR            reduce using rule 14 (declaration -> type_specifier IDENTIFIER EQUAL expression SEMICOLON .)
+
+
+state 94
+
+    (16) declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET . SEMICOLON
+
+    SEMICOLON       shift and go to state 106
+
+
+state 95
+
+    (26) assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment . expression SEMICOLON
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 107
+
+state 96
+
+    (27) assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL . expression SEMICOLON
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 108
+
+state 97
+
+    (42) for_loop -> FOR LPAREN assignment condition SEMICOLON . unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (40) unitarymodifiers -> . IDENTIFIER PLUS PLUS
+    (41) unitarymodifiers -> . IDENTIFIER MINUS MINUS
+
+    IDENTIFIER      shift and go to state 110
+
+    unitarymodifiers               shift and go to state 109
+
+state 98
+
+    (44) if_statement -> IF LPAREN condition RPAREN LBRACE . statement_list RBRACE
+    (45) if_statement -> IF LPAREN condition RPAREN LBRACE . statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (4) statement_list -> . statement_list statement
+    (5) statement_list -> . statement
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . if_statement
+    (10) statement -> . function_call
+    (11) statement -> . return_statement
+    (14) declaration -> . type_specifier IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> . type_specifier identifier_list SEMICOLON
+    (16) declaration -> . type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (42) for_loop -> . FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (44) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (46) function_call -> . PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> . PRINTF LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> . PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+    (49) function_call -> . SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+    (50) return_statement -> . RETURN SEMICOLON
+    (51) return_statement -> . RETURN expression SEMICOLON
+    (17) type_specifier -> . INT
+    (18) type_specifier -> . FLOAT
+    (19) type_specifier -> . CHAR
+
+    IDENTIFIER      shift and go to state 21
+    FOR             shift and go to state 22
+    IF              shift and go to state 23
+    PRINTF          shift and go to state 24
+    SCANF           shift and go to state 25
+    RETURN          shift and go to state 26
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 27
+    CHAR            shift and go to state 28
+
+    statement_list                 shift and go to state 111
+    statement                      shift and go to state 13
+    declaration                    shift and go to state 14
+    assignment                     shift and go to state 15
+    for_loop                       shift and go to state 16
+    if_statement                   shift and go to state 17
+    function_call                  shift and go to state 18
+    return_statement               shift and go to state 19
+    type_specifier                 shift and go to state 20
+
+state 99
+
+    (43) condition -> expression COMPARER expression .
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    RPAREN          reduce using rule 43 (condition -> expression COMPARER expression .)
+    SEMICOLON       reduce using rule 43 (condition -> expression COMPARER expression .)
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 100
+
+    (46) function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER . RPAREN SEMICOLON
+    (36) expression -> IDENTIFIER .
+    (37) expression -> IDENTIFIER . LBRAKET expression RBRAKET
+
+  ! shift/reduce conflict for RPAREN resolved as shift
+    RPAREN          shift and go to state 112
+    COMMA           reduce using rule 36 (expression -> IDENTIFIER .)
+    PLUS            reduce using rule 36 (expression -> IDENTIFIER .)
+    MINUS           reduce using rule 36 (expression -> IDENTIFIER .)
+    TIMES           reduce using rule 36 (expression -> IDENTIFIER .)
+    DIVIDE          reduce using rule 36 (expression -> IDENTIFIER .)
+    LBRAKET         shift and go to state 73
+
+  ! RPAREN          [ reduce using rule 36 (expression -> IDENTIFIER .) ]
+
+
+state 101
+
+    (48) function_call -> PRINTF LPAREN STRING COMMA expression_list . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 113
+
+
+state 102
+
+    (38) expression_list -> expression .
+    (39) expression_list -> expression . COMMA expression_list
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    RPAREN          reduce using rule 38 (expression_list -> expression .)
+    COMMA           shift and go to state 114
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 103
+
+    (47) function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .
+
+    RBRACE          reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    IDENTIFIER      reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    FOR             reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    IF              reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    PRINTF          reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    SCANF           reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    RETURN          reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    INT             reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    FLOAT           reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+    CHAR            reduce using rule 47 (function_call -> PRINTF LPAREN STRING RPAREN SEMICOLON .)
+
+
+state 104
+
+    (49) function_call -> SCANF LPAREN STRING COMMA AMPERSAND . IDENTIFIER RPAREN SEMICOLON
+
+    IDENTIFIER      shift and go to state 115
+
+
+state 105
+
+    (37) expression -> IDENTIFIER LBRAKET expression RBRAKET .
+
+    SEMICOLON       reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+    PLUS            reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+    MINUS           reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+    TIMES           reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+    DIVIDE          reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+    RBRAKET         reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+    COMPARER        reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+    RPAREN          reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+    COMMA           reduce using rule 37 (expression -> IDENTIFIER LBRAKET expression RBRAKET .)
+
+
+state 106
+
+    (16) declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .
+
+    RBRACE          reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    IDENTIFIER      reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    FOR             reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    IF              reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    PRINTF          reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    SCANF           reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    RETURN          reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    INT             reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    FLOAT           reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+    CHAR            reduce using rule 16 (declaration -> type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON .)
+
+
+state 107
+
+    (26) assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression . SEMICOLON
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 116
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 108
+
+    (27) assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression . SEMICOLON
+    (28) expression -> expression . PLUS expression
+    (29) expression -> expression . MINUS expression
+    (30) expression -> expression . TIMES expression
+    (31) expression -> expression . DIVIDE expression
+
+    SEMICOLON       shift and go to state 117
+    PLUS            shift and go to state 68
+    MINUS           shift and go to state 69
+    TIMES           shift and go to state 70
+    DIVIDE          shift and go to state 71
+
+
+state 109
+
+    (42) for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers . RPAREN LBRACE statement_list RBRACE
+
+    RPAREN          shift and go to state 118
+
+
+state 110
+
+    (40) unitarymodifiers -> IDENTIFIER . PLUS PLUS
+    (41) unitarymodifiers -> IDENTIFIER . MINUS MINUS
+
+    PLUS            shift and go to state 119
+    MINUS           shift and go to state 120
+
+
+state 111
+
+    (44) if_statement -> IF LPAREN condition RPAREN LBRACE statement_list . RBRACE
+    (45) if_statement -> IF LPAREN condition RPAREN LBRACE statement_list . RBRACE ELSE LBRACE statement_list RBRACE
+    (4) statement_list -> statement_list . statement
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . if_statement
+    (10) statement -> . function_call
+    (11) statement -> . return_statement
+    (14) declaration -> . type_specifier IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> . type_specifier identifier_list SEMICOLON
+    (16) declaration -> . type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (42) for_loop -> . FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (44) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (46) function_call -> . PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> . PRINTF LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> . PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+    (49) function_call -> . SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+    (50) return_statement -> . RETURN SEMICOLON
+    (51) return_statement -> . RETURN expression SEMICOLON
+    (17) type_specifier -> . INT
+    (18) type_specifier -> . FLOAT
+    (19) type_specifier -> . CHAR
+
+    RBRACE          shift and go to state 121
+    IDENTIFIER      shift and go to state 21
+    FOR             shift and go to state 22
+    IF              shift and go to state 23
+    PRINTF          shift and go to state 24
+    SCANF           shift and go to state 25
+    RETURN          shift and go to state 26
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 27
+    CHAR            shift and go to state 28
+
+    statement                      shift and go to state 30
+    declaration                    shift and go to state 14
+    assignment                     shift and go to state 15
+    for_loop                       shift and go to state 16
+    if_statement                   shift and go to state 17
+    function_call                  shift and go to state 18
+    return_statement               shift and go to state 19
+    type_specifier                 shift and go to state 20
+
+state 112
+
+    (46) function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 122
+
+
+state 113
+
+    (48) function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 123
+
+
+state 114
+
+    (39) expression_list -> expression COMMA . expression_list
+    (38) expression_list -> . expression
+    (39) expression_list -> . expression COMMA expression_list
+    (28) expression -> . expression PLUS expression
+    (29) expression -> . expression MINUS expression
+    (30) expression -> . expression TIMES expression
+    (31) expression -> . expression DIVIDE expression
+    (32) expression -> . LPAREN expression RPAREN
+    (33) expression -> . NUMBER
+    (34) expression -> . CHAR_LITERAL
+    (35) expression -> . CHAR
+    (36) expression -> . IDENTIFIER
+    (37) expression -> . IDENTIFIER LBRAKET expression RBRAKET
+
+    LPAREN          shift and go to state 46
+    NUMBER          shift and go to state 47
+    CHAR_LITERAL    shift and go to state 48
+    CHAR            shift and go to state 49
+    IDENTIFIER      shift and go to state 50
+
+    expression                     shift and go to state 102
+    expression_list                shift and go to state 124
+
+state 115
+
+    (49) function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 125
+
+
+state 116
+
+    (26) assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .
+
+    RBRACE          reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    FOR             reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    IF              reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    PRINTF          reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    SCANF           reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    RETURN          reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    INT             reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    FLOAT           reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    CHAR            reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    LPAREN          reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    NUMBER          reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 26 (assignment -> IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON .)
+
+
+state 117
+
+    (27) assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .
+
+    RBRACE          reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    IDENTIFIER      reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    FOR             reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    IF              reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    PRINTF          reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    SCANF           reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    RETURN          reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    INT             reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    FLOAT           reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    CHAR            reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    LPAREN          reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    NUMBER          reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+    CHAR_LITERAL    reduce using rule 27 (assignment -> IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON .)
+
+
+state 118
+
+    (42) for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN . LBRACE statement_list RBRACE
+
+    LBRACE          shift and go to state 126
+
+
+state 119
+
+    (40) unitarymodifiers -> IDENTIFIER PLUS . PLUS
+
+    PLUS            shift and go to state 127
+
+
+state 120
+
+    (41) unitarymodifiers -> IDENTIFIER MINUS . MINUS
+
+    MINUS           shift and go to state 128
+
+
+state 121
+
+    (44) if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .
+    (45) if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE . ELSE LBRACE statement_list RBRACE
+
+    RBRACE          reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    IDENTIFIER      reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    FOR             reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    IF              reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    PRINTF          reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    SCANF           reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    RETURN          reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    INT             reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    FLOAT           reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    CHAR            reduce using rule 44 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE .)
+    ELSE            shift and go to state 129
+
+
+state 122
+
+    (46) function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .
+
+    RBRACE          reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    IDENTIFIER      reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    FOR             reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    IF              reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    PRINTF          reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    SCANF           reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    RETURN          reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    INT             reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    FLOAT           reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+    CHAR            reduce using rule 46 (function_call -> PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON .)
+
+
+state 123
+
+    (48) function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .
+
+    RBRACE          reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    IDENTIFIER      reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    FOR             reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    IF              reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    PRINTF          reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    SCANF           reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    RETURN          reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    INT             reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    FLOAT           reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+    CHAR            reduce using rule 48 (function_call -> PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON .)
+
+
+state 124
+
+    (39) expression_list -> expression COMMA expression_list .
+
+    RPAREN          reduce using rule 39 (expression_list -> expression COMMA expression_list .)
+
+
+state 125
+
+    (49) function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 130
+
+
+state 126
+
+    (42) for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE . statement_list RBRACE
+    (4) statement_list -> . statement_list statement
+    (5) statement_list -> . statement
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . if_statement
+    (10) statement -> . function_call
+    (11) statement -> . return_statement
+    (14) declaration -> . type_specifier IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> . type_specifier identifier_list SEMICOLON
+    (16) declaration -> . type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (42) for_loop -> . FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (44) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (46) function_call -> . PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> . PRINTF LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> . PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+    (49) function_call -> . SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+    (50) return_statement -> . RETURN SEMICOLON
+    (51) return_statement -> . RETURN expression SEMICOLON
+    (17) type_specifier -> . INT
+    (18) type_specifier -> . FLOAT
+    (19) type_specifier -> . CHAR
+
+    IDENTIFIER      shift and go to state 21
+    FOR             shift and go to state 22
+    IF              shift and go to state 23
+    PRINTF          shift and go to state 24
+    SCANF           shift and go to state 25
+    RETURN          shift and go to state 26
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 27
+    CHAR            shift and go to state 28
+
+    assignment                     shift and go to state 15
+    statement_list                 shift and go to state 131
+    statement                      shift and go to state 13
+    declaration                    shift and go to state 14
+    for_loop                       shift and go to state 16
+    if_statement                   shift and go to state 17
+    function_call                  shift and go to state 18
+    return_statement               shift and go to state 19
+    type_specifier                 shift and go to state 20
+
+state 127
+
+    (40) unitarymodifiers -> IDENTIFIER PLUS PLUS .
+
+    RPAREN          reduce using rule 40 (unitarymodifiers -> IDENTIFIER PLUS PLUS .)
+
+
+state 128
+
+    (41) unitarymodifiers -> IDENTIFIER MINUS MINUS .
+
+    RPAREN          reduce using rule 41 (unitarymodifiers -> IDENTIFIER MINUS MINUS .)
+
+
+state 129
+
+    (45) if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE . LBRACE statement_list RBRACE
+
+    LBRACE          shift and go to state 132
+
+
+state 130
+
+    (49) function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .
+
+    RBRACE          reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    IDENTIFIER      reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    FOR             reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    IF              reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    PRINTF          reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    SCANF           reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    RETURN          reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    INT             reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    FLOAT           reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+    CHAR            reduce using rule 49 (function_call -> SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON .)
+
+
+state 131
+
+    (42) for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list . RBRACE
+    (4) statement_list -> statement_list . statement
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . if_statement
+    (10) statement -> . function_call
+    (11) statement -> . return_statement
+    (14) declaration -> . type_specifier IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> . type_specifier identifier_list SEMICOLON
+    (16) declaration -> . type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (42) for_loop -> . FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (44) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (46) function_call -> . PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> . PRINTF LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> . PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+    (49) function_call -> . SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+    (50) return_statement -> . RETURN SEMICOLON
+    (51) return_statement -> . RETURN expression SEMICOLON
+    (17) type_specifier -> . INT
+    (18) type_specifier -> . FLOAT
+    (19) type_specifier -> . CHAR
+
+    RBRACE          shift and go to state 133
+    IDENTIFIER      shift and go to state 21
+    FOR             shift and go to state 22
+    IF              shift and go to state 23
+    PRINTF          shift and go to state 24
+    SCANF           shift and go to state 25
+    RETURN          shift and go to state 26
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 27
+    CHAR            shift and go to state 28
+
+    assignment                     shift and go to state 15
+    statement                      shift and go to state 30
+    declaration                    shift and go to state 14
+    for_loop                       shift and go to state 16
+    if_statement                   shift and go to state 17
+    function_call                  shift and go to state 18
+    return_statement               shift and go to state 19
+    type_specifier                 shift and go to state 20
+
+state 132
+
+    (45) if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE . statement_list RBRACE
+    (4) statement_list -> . statement_list statement
+    (5) statement_list -> . statement
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . if_statement
+    (10) statement -> . function_call
+    (11) statement -> . return_statement
+    (14) declaration -> . type_specifier IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> . type_specifier identifier_list SEMICOLON
+    (16) declaration -> . type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (42) for_loop -> . FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (44) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (46) function_call -> . PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> . PRINTF LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> . PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+    (49) function_call -> . SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+    (50) return_statement -> . RETURN SEMICOLON
+    (51) return_statement -> . RETURN expression SEMICOLON
+    (17) type_specifier -> . INT
+    (18) type_specifier -> . FLOAT
+    (19) type_specifier -> . CHAR
+
+    IDENTIFIER      shift and go to state 21
+    FOR             shift and go to state 22
+    IF              shift and go to state 23
+    PRINTF          shift and go to state 24
+    SCANF           shift and go to state 25
+    RETURN          shift and go to state 26
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 27
+    CHAR            shift and go to state 28
+
+    statement_list                 shift and go to state 134
+    statement                      shift and go to state 13
+    declaration                    shift and go to state 14
+    assignment                     shift and go to state 15
+    for_loop                       shift and go to state 16
+    if_statement                   shift and go to state 17
+    function_call                  shift and go to state 18
+    return_statement               shift and go to state 19
+    type_specifier                 shift and go to state 20
+
+state 133
+
+    (42) for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .
+
+    RBRACE          reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    IDENTIFIER      reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    FOR             reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    IF              reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    PRINTF          reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    SCANF           reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    RETURN          reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    INT             reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    FLOAT           reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+    CHAR            reduce using rule 42 (for_loop -> FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE .)
+
+
+state 134
+
+    (45) if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list . RBRACE
+    (4) statement_list -> statement_list . statement
+    (6) statement -> . declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . if_statement
+    (10) statement -> . function_call
+    (11) statement -> . return_statement
+    (14) declaration -> . type_specifier IDENTIFIER EQUAL expression SEMICOLON
+    (15) declaration -> . type_specifier identifier_list SEMICOLON
+    (16) declaration -> . type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON
+    (24) assignment -> . IDENTIFIER EQUAL expression SEMICOLON
+    (25) assignment -> . IDENTIFIER compound_assignment expression SEMICOLON
+    (26) assignment -> . IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
+    (27) assignment -> . IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON
+    (42) for_loop -> . FOR LPAREN assignment condition SEMICOLON unitarymodifiers RPAREN LBRACE statement_list RBRACE
+    (44) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE
+    (45) if_statement -> . IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE
+    (46) function_call -> . PRINTF LPAREN STRING COMMA IDENTIFIER RPAREN SEMICOLON
+    (47) function_call -> . PRINTF LPAREN STRING RPAREN SEMICOLON
+    (48) function_call -> . PRINTF LPAREN STRING COMMA expression_list RPAREN SEMICOLON
+    (49) function_call -> . SCANF LPAREN STRING COMMA AMPERSAND IDENTIFIER RPAREN SEMICOLON
+    (50) return_statement -> . RETURN SEMICOLON
+    (51) return_statement -> . RETURN expression SEMICOLON
+    (17) type_specifier -> . INT
+    (18) type_specifier -> . FLOAT
+    (19) type_specifier -> . CHAR
+
+    RBRACE          shift and go to state 135
+    IDENTIFIER      shift and go to state 21
+    FOR             shift and go to state 22
+    IF              shift and go to state 23
+    PRINTF          shift and go to state 24
+    SCANF           shift and go to state 25
+    RETURN          shift and go to state 26
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 27
+    CHAR            shift and go to state 28
+
+    statement                      shift and go to state 30
+    declaration                    shift and go to state 14
+    assignment                     shift and go to state 15
+    for_loop                       shift and go to state 16
+    if_statement                   shift and go to state 17
+    function_call                  shift and go to state 18
+    return_statement               shift and go to state 19
+    type_specifier                 shift and go to state 20
+
+state 135
+
+    (45) if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .
+
+    RBRACE          reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    IDENTIFIER      reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    FOR             reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    IF              reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    PRINTF          reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    SCANF           reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    RETURN          reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    INT             reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    FLOAT           reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+    CHAR            reduce using rule 45 (if_statement -> IF LPAREN condition RPAREN LBRACE statement_list RBRACE ELSE LBRACE statement_list RBRACE .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PLUS in state 87 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 87 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 87 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 87 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 88 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 88 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 88 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 88 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 89 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 89 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 89 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 89 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 90 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 90 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 90 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 90 resolved as shift
+WARNING: shift/reduce conflict for RPAREN in state 100 resolved as shift

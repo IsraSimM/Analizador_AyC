@@ -47,11 +47,11 @@ def p_statement_list(p):
     p[0] = [p[1]] if len(p) == 2 else [p[1]] + p[2]
 
 def p_statement(p):
-    '''statement : declaration
+    '''statement : for_statement
                  | assignment_statement
                  | printf_statement
                  | scanf_statement
-                 | for_statement
+                 | declaration
                  | if_statement
                  | else_statement
                  | function_call'''
@@ -121,9 +121,13 @@ def p_else_statement(p):
     '''else_statement : ELSE block'''
     p[0] = ('else', p[2])
 
-def p_for_statement(p):
+""" def p_for_statement(p):
     '''for_statement : FOR LPAREN assignment_statement condition PUNTOYCOMA assignment_statement RPAREN block'''
-    p[0] = ('for', p[3], p[5], p[7], p[9])
+    p[0] = ('for', p[3], p[5], p[7], p[9]) """
+
+def p_for_statement(p):
+    '''for_statement : FOR LPAREN assignment_statement RPAREN block'''
+    p[0] = ('for', p[2], p[3], p[4])
 
 def p_condition(p):
     '''condition : expression COMPARADOR expression'''
