@@ -121,13 +121,9 @@ def p_else_statement(p):
     '''else_statement : ELSE block'''
     p[0] = ('else', p[2])
 
-""" def p_for_statement(p):
-    '''for_statement : FOR LPAREN assignment_statement condition PUNTOYCOMA assignment_statement RPAREN block'''
-    p[0] = ('for', p[3], p[5], p[7], p[9]) """
-
 def p_for_statement(p):
-    '''for_statement : FOR LPAREN assignment_statement RPAREN block'''
-    p[0] = ('for', p[2], p[3], p[4])
+    '''for_statement : FOR LPAREN assignment_statement condition PUNTOYCOMA assignment_statement RPAREN block'''
+    p[0] = ('for', p[3], p[5], p[7], p[9])
 
 def p_condition(p):
     '''condition : expression COMPARADOR expression'''

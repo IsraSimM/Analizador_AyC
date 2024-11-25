@@ -2,7 +2,7 @@ import ply.lex as lex
 
 # Lista de tokens
 tokens = [
-    'INCLUDE', 'HEADER', 'INT', 'FLOAT', 'CHAR', 'IDENTIFIER', 'NUMBER', 'SEMICOLON',
+    'INCLUDE', 'HEADER', 'IDENTIFIER', 'NUMBER', 'SEMICOLON',
     'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 'COMMA', 'EQUAL', 'PLUS', 'MINUS',
     'TIMES', 'DIVIDE', 'COMPARER', 'STRING', 'CHAR_LITERAL', 'AMPERSAND', 
     'RBRAKET', 'LBRAKET', 'DOT'
