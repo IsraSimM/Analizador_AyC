@@ -69,8 +69,9 @@ def t_newline(t):
 
 # Manejo de errores
 def t_error(t):
-    print(f"Error de carácter ilegal '{t.value[0]}' en la línea {t.lexer.lineno}")
+    print(f"Error lexico en la línea {t.lexer.lineno}")
     t.lexer.skip(1)
+    exit()
 
 
 # Construir el lexer

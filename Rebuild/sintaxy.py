@@ -14,49 +14,47 @@ def analyze_expression(expression, symbol_table):
         str: Tipo resultante de la expresión ('int', 'float', 'string', etc.).
     """
     if isinstance(expression, list):
-        # Caso: Lista de expresiones
-        if len(expression) == 1:
-            return analyze_expression(expression[0], symbol_table)
-        elif expression == ['(', ')']:
-            # Ignorar paréntesis explícitos
-            return None
+        # Si la expresión es una lista, filtramos cualquier lista vacía como ['(', ')']
+        clean_expressions = [subexpr for subexpr in expression if subexpr != ['(', ')']]
+        
+        # Si la lista es vacía o tiene un solo elemento, procesamos la única expresión que queda
+        if len(clean_expressions) == 1:
+            return analyze_expression(clean_expressions[0], symbol_table)
+        elif len(clean_expressions) > 1:
+            # Procesar todas las expresiones en la lista
+            operand_types = [analyze_expression(subexpr, symbol_table) for subexpr in clean_expressions]
+            return operand_types[-1]  # Retornamos el tipo del último operando procesado
         else:
-            raise ValueError(f"Lista con múltiples elementos no válida: {expression}")
-    
+            # Si la lista está vacía o solo contiene paréntesis, retornamos None
+            return None
+
     elif isinstance(expression, tuple) and len(expression) > 0:
         if expression[0] == 'expression':
             if len(expression) == 2:
-                # Subexpresión simple
+                # Subexpresión simple: tipo de variable o número
                 subexpr = expression[1]
                 if isinstance(subexpr, str) and subexpr in symbol_table:
-                    return symbol_table[subexpr]
-                elif isinstance(subexpr, int):
-                    return 'int'
-                elif isinstance(subexpr, float):
-                    return 'float'
-                elif isinstance(subexpr, tuple):
-                    return analyze_expression(subexpr, symbol_table)
+                    return symbol_table[subexpr]  # Retorna el tipo de la variable según el diccionario
+                elif isinstance(subexpr, (int, float)):
+                    return 'float' if isinstance(subexpr, float) else 'int'  # Retorna el tipo numérico
                 else:
                     raise ValueError(f"Token desconocido: {subexpr}")
             elif len(expression) == 3:
-                # Operación binaria
+                # Operación binaria: operator y operandos
                 operator = expression[1]
                 operands = expression[2]
-                if not isinstance(operands, list) or len(operands) != 2:
+                if not isinstance(operands, list):
                     raise ValueError(f"Operadores no válidos: {operands}")
-                operand_types = [
-                    analyze_expression(op, symbol_table)
-                    for op in operands if op != ['(', ')']
-                ]
+                
+                operand_types = [analyze_expression(op, symbol_table) for op in operands]
+                
+                # Determinar tipo según los operandos y el operador
                 if operator in ['+', '-', '*', '/']:
-                    if 'float' in operand_types:
-                        return 'float'
-                    else:
-                        return 'int'
+                    return 'float' if 'float' in operand_types else 'int'
                 else:
                     raise ValueError(f"Operador desconocido: {operator}")
             elif len(expression) == 4 and isinstance(expression[3], list):
-                # Ignorar paréntesis explícitos
+                # Ignorar listas de paréntesis decorativos
                 return analyze_expression(expression[2], symbol_table)
             else:
                 raise ValueError(f"Estructura no válida: {expression}")
@@ -76,7 +74,7 @@ class SymbolTable():
         self.symbols.update({name: var_type})
 
     def add_variables(self, names, var_type):
-        namesSplit = str(names).replace("('identifier_list', [", "").replace("])", "").replace("'", "")
+        namesSplit = str(names).replace("('identifier_list', [", "").replace("])", "").replace("'", "").replace("[","").replace("]","")
         # Separar en una lista de palabras
         word_list = namesSplit.split(", ")
 
@@ -102,11 +100,6 @@ class SymbolTable():
         print("Variables declaradas:")
         for var, var_type in self.symbols.items():
             print(f"  - {var}: {var_type}")
-        
-        # Imprimir las funciones
-        print("\nFunciones declaradas:")
-        for func, details in self.functions.items():
-            print(f"  - {func}: {details['return_type']} (params: {', '.join(details['params'])})")
 
 tableSy = SymbolTable()
 
@@ -163,10 +156,18 @@ def p_identifier_list(p):
 def p_declaration(p):
     '''declaration : type_specifier IDENTIFIER EQUAL expression SEMICOLON
                    | type_specifier identifier_list SEMICOLON
+                   | type_specifier identifier_list EQUAL expression SEMICOLON
                    | type_specifier identifier_list LBRAKET NUMBER RBRAKET SEMICOLON'''
-    if len(p) == 6:
+    if len(p) == 6 and len(p[2]) == 1:
         p[0] = ('declaration', [p[1], p[2], p[3], p[4], p[5]])
+        print("Hodfaaa",p[2], "Holsass", p[1][1])
         tableSy.add_variable(p[2], p[1][1])
+    elif len(p) == 6:
+        try:
+            p[0] = ('declaration', [p[1], p[2], p[3], p[4], p[5]])
+            tableSy.add_variables(str(p[2]), p[1][1])
+        except Exception as e:
+            print(e)
     elif len(p) == 4:
         p[0] = ('declaration', [p[1], p[2], p[3]])
         tableSy.add_variables(p[2], p[1][1])
@@ -193,17 +194,18 @@ def p_assignment(p):
                   | IDENTIFIER LBRAKET expression RBRAKET compound_assignment expression SEMICOLON
                   | IDENTIFIER LBRAKET expression RBRAKET EQUAL expression SEMICOLON'''
     if not p[1] in tableSy.symbols:
-        print("Undefined variable: ",p[1])
+        print("Error semantico: undefined variable: ",p[1], "en la linea", p.lineno(1))
         exit()
-    #validar asignacion de tipos de datos correctos, int = int, float = float
     else:
-        print("Variable: ",p[3:4])
-        print("Tipo: ",p[3][1])
-        try:
-            result = analyze_expression(p[3:4], tableSy.symbols)
-            print("Tipo resultante:", result)
-        except Exception as e:
-            print(f"Error: {e}")
+        if p[2] == '[':
+            arrayresult = analyze_expression(p[3], tableSy.symbols)
+            if arrayresult != 'int':
+                print(f"Error: El índice del array '{p[1]}' debe ser de tipo entero.")
+                exit()
+        result = analyze_expression(p[len(p)-2], tableSy.symbols)
+        if result != tableSy.symbols[p[1]]:
+            print(f"Error: Asignación de tipo incorrecto para '{p[1]}': {tableSy.symbols[p[1]]} = {result}")
+            exit()
         if len(p) == 5:
             p[0] = ('assignment', [p[1], p[2], p[3], p[4]])
         elif len(p) == 4:
@@ -274,6 +276,7 @@ def p_return_statement(p):
 def p_error(p):
     if p:
         print(f'Error de sintaxis en la línea {p.lineno}: {p.value}')
+        exit()
     else:
         print('Error de sintaxis al final del archivo')
 
@@ -301,42 +304,13 @@ def pretty_print_tree(node, indent=0):
         print(f"{spacer}{node}")
 
 
-with open("Common Files/TesterFile.c", "r") as file:
+with open("Common Files/CorrectedProgram.c", "r") as file:
     data = file.read()
-result = parser.parse(data)
-print("Árbol de sintaxis:")
-#pretty_print_tree(result)
-
-class SymbolTable:
-    def __init__(self):
-        self.symbols = {}
-        self.functions = {}
-
-    def add_variable(self, name, var_type):
-        if name in self.symbols:
-            raise Exception(f"Variable '{name}' ya declarada.")
-        self.symbols[name] = var_type
-
-    def add_function(self, name, return_type, params):
-        if name in self.functions:
-            raise Exception(f"Función '{name}' ya declarada.")
-        self.functions[name] = {'return_type': return_type, 'params': params}
-
-    def get_variable_type(self, name):
-        return self.symbols.get(name)
-
-    def get_function(self, name):
-        return self.functions.get(name)
-
-    def print_symbol_table(self):
-        # Imprimir las variables
-        print("Variables declaradas:")
-        for var, var_type in self.symbols.items():
-            print(f"  - {var}: {var_type}")
-        
-        # Imprimir las funciones
-        print("\nFunciones declaradas:")
-        for func, details in self.functions.items():
-            print(f"  - {func}: {details['return_type']} (params: {', '.join(details['params'])})")
+result = parser.parse(data)        
 
 tableSy.print_symbol_table()
+
+print("\nÁrbol de sintaxis:")
+pretty_print_tree(result)
+print("\nAnálisis de expresiones:")
+print("No se encontraron errores de codigo")

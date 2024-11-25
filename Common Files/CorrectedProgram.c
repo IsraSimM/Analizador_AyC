@@ -2,7 +2,7 @@
 #include <math.h>
 
 int main() {
-    float comision, sueldo_diario, sueldo_semanal;
+    float comision, sueldo_diario, sueldo_semanal=0;
     int no_empleado, edad, faltas, c;
     char categoria;
     float suma_total = 0;
@@ -16,7 +16,6 @@ int main() {
         scanf(" %d", &edad);
         
         printf("Escribe tu categoría: ");
-        getchar();
         scanf(" %c", &categoria);
 
         if (categoria == 'a') {
@@ -31,7 +30,7 @@ int main() {
         printf("Escribe las faltas: ");
         scanf("%d", &faltas);
 
-        sueldo_semanal = (sueldo_diario * 7) + (sueldo_diario*comision*7) - (faltas * 650.45);
+        sueldo_semanal = sueldo_diario * 7 + sueldo_diario*comision*7 - faltas * 650.45;
         sueldos_totales[c-1] = sueldo_semanal;
         suma_total += sueldo_semanal;
 
