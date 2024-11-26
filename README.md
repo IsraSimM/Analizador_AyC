@@ -1,9 +1,10 @@
 # Analizador AyC
 **Un analizador sintáctico y semántico desarrollado con PLY y YACC.**
-**Aldana Zamudio Alexis Vladimir**
-**Campero Enciso Juan Francisco**
-**Peña Escamilla Luis Angel**
-**Simon Martinez Israel**
+
+**\nAldana Zamudio Alexis Vladimir**
+**\nCampero Enciso Juan Francisco**
+**\nPeña Escamilla Luis Angel**
+**\nSimon Martinez Israel**
 
 Este proyecto implementa un analizador basado en Python para procesar programas escritos en C, utilizando la biblioteca PLY (Python Lex-Yacc). Incluye un análisis léxico, sintáctico y semántico, y genera un árbol sintáctico a partir del código fuente proporcionado.
 
@@ -14,10 +15,10 @@ Antes de ejecutar el analizador, asegúrate de tener instaladas las siguientes d
    	Instalar usando:
 	```bash
  	pip install ply
-Regex: Biblioteca para trabajar con expresiones regulares.
+2. **Regex**: Biblioteca para trabajar con expresiones regulares.
 	Instalar usando:
-	´´´bash
-	pip install regex
+	```bash
+ 	pip install regex 
 Ejecución
 Para ejecutar el analizador, desde el ID o editor de codigo
 
@@ -28,11 +29,11 @@ Opción 2: Common Files/CorrectedProgram.c
 Características del Analizador
 El analizador está diseñado específicamente para procesar el archivo CorrectedProgram.c y realiza los siguientes análisis:
 
-1. Análisis Léxico
+1. ***Análisis Léxico***
 Análisis de caracteres.
 Asignación de tokens.
 
-2. Análisis Sintáctico
+2. ***Análisis Sintáctico***
 El analizador soporta las siguientes construcciones del lenguaje C:
 	Declaración de variables:
 		Declaración simple:
@@ -51,7 +52,7 @@ El analizador soporta las siguientes construcciones del lenguaje C:
 	Impresiones (printf).
 	Escaneos (scanf).
 	Generación de árbol sintáctico.
-3. Análisis Semántico
+3. ***Análisis Semántico***
 	Creación de la tabla de símbolos.
 	Identificación de tipos en expresiones.
 	Detección de variables no declaradas.
