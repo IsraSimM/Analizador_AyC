@@ -19,7 +19,8 @@ reserved = {
     'return': 'RETURN',
     'printf': 'PRINTF',
     'scanf': 'SCANF',
-    'main': 'MAIN'
+    'main': 'MAIN',
+    'getchar': 'GETCHAR'
 }
 
 # Agregar palabras clave como tokens
