@@ -1,39 +1,62 @@
-# Analizador_AyC
- Analizador sintactico y semantico usando PLY_YACC
- 1)instalar librería Python PLY desde la terminal 
-$pip install ply
+# Analizador AyC
+**Un analizador sintáctico y semántico desarrollado con PLY y YACC.**
+**Aldana Zamudio Alexis Vladimir**
+**Campero Enciso Juan Francisco**
+**Peña Escamilla Luis Angel**
+**Simon Martinez Israel**
 
-2) instalar librería de Python regex desde la terminal 
-$pip install regex
+Este proyecto implementa un analizador basado en Python para procesar programas escritos en C, utilizando la biblioteca PLY (Python Lex-Yacc). Incluye un análisis léxico, sintáctico y semántico, y genera un árbol sintáctico a partir del código fuente proporcionado.
 
-3) ejecutar sintaxy.py, en caso de error solo modificar la linea 307 de acuerdo a la dirección del archivo (../Common Files/CorrectedProgram.c)(Common Files/CorrectedProgram.c)
+## Requisitos
+Antes de ejecutar el analizador, asegúrate de tener instaladas las siguientes dependencias:
 
-El analizador esta realizado de acuerdo a el archivo CorrectedProgram.c y toma como consideración los siguientes bloques: 
-análisis léxico: 
-	análisis de caracteres 
-	asignación de tokens 
+1. **PLY**: Biblioteca para análisis léxico y sintáctico.
+   	Instalar usando:
+	```bash
+ 	pip install ply
+Regex: Biblioteca para trabajar con expresiones regulares.
+	Instalar usando:
+	´´´bash
+	pip install regex
+Ejecución
+Para ejecutar el analizador, desde el ID o editor de codigo
 
-análisis sintáctico:	
-	declaración de variables:
-		declaración simple: token_type identifier semicolon
-		declaración con inicialización: token_type identifier equals expression semicolon
-		declaración múltiple: token_type identifier_list semicolon
-		declaración múltiple con inicializacion: token_type identifier_list equals expression semicolon
-	asignación de valores 
-	directivas de procesamiento
-	funtion main()
-	bucles for simples
-	condicional if
-	impresiones 
-	escaneos 
-	árbol sintáctico 
+Si encuentras errores relacionados con la ruta de acceso al archivo fuente, modifica la línea 307 de sintaxy.py para reflejar la ubicación correcta de CorrectedProgram.c. Ejemplo:
 
-	
-análisis semántico: 
-	tabla de símbolos 
-	identificación de tipo en una expresión 
-	identificación de variables no declaradas 
-	verificación de tipos de dato en la asignación 
+Opción 1: ../Common Files/CorrectedProgram.c
+Opción 2: Common Files/CorrectedProgram.c
+Características del Analizador
+El analizador está diseñado específicamente para procesar el archivo CorrectedProgram.c y realiza los siguientes análisis:
+
+1. Análisis Léxico
+Análisis de caracteres.
+Asignación de tokens.
+
+2. Análisis Sintáctico
+El analizador soporta las siguientes construcciones del lenguaje C:
+	Declaración de variables:
+		Declaración simple:
+			token_type identifier semicolon
+		Declaración con inicialización:
+			token_type identifier equals expression semicolon
+		Declaración múltiple:
+			token_type identifier_list semicolon
+		Declaración múltiple con inicialización:
+			token_type identifier_list equals expression semicolon
+	Asignación de valores.
+	Directivas de preprocesador.
+	Función main().
+	Bucles for simples.
+	Condicionales if.
+	Impresiones (printf).
+	Escaneos (scanf).
+	Generación de árbol sintáctico.
+3. Análisis Semántico
+	Creación de la tabla de símbolos.
+	Identificación de tipos en expresiones.
+	Detección de variables no declaradas.
+	Verificación de tipos de datos en asignaciones.
+
 	
 		
 
