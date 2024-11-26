@@ -1,5 +1,5 @@
-# Analizador AyC
-**Un analizador sintáctico y semántico desarrollado con PLY y YACC.**
+# Analizador LEXICO SINTACTICO SEMANTICO 
+**Un analizador lexico, sintáctico y semántico desarrollado con PLY y YACC.**
 
 ***Aldana Zamudio Alexis Vladimir***
 
