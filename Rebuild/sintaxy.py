@@ -128,6 +128,10 @@ def p_function(p):
     '''function : INT MAIN LPAREN RPAREN LBRACE statement_list RBRACE'''
     p[0] = ('function', [p[1], p[2], p[6]])
 
+def p_getchar(p):
+    '''getchar : GETCHAR LPAREN RPAREN SEMICOLON'''
+    p[0] = ('getchar', p[1])
+    
 def p_statement_list(p):
     '''statement_list : statement statement_list 
                       | statement'''
